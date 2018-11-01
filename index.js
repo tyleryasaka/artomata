@@ -1,99 +1,8 @@
-const precision = 100000
-
-class Coord {
-  constructor(x, y) {
-    this.x = x
-    this.y = y
-  }
-
-  print() {
-    console.log(JSON.stringify(this))
-  }
-}
-
-function square(n) {
-  return Math.pow(n, 2)
-}
-
-function getPolygonDegrees(sides) {
-  return ((sides - 2) * 180) / sides
-}
-
-function toRadians(degrees) {
-  return Math.PI * (degrees / 180.0)
-}
-
-function toDegrees(radians) {
-  return normalizeDegree((radians * 180.0) / Math.PI)
-}
-
-function sin(degrees) {
-  return Math.sin(toRadians(degrees))
-}
-
-function cos(degrees) {
-	return Math.cos(toRadians(degrees))
-}
-
-function getDegree(coord) {
-  if (coord.x === 0) {
-    return 0
-  }
-  return toDegrees(Math.atan2(coord.y, coord.x))
-}
-
-function normalizeDegree(degree) {
-  return (degree + 360) % 360
-}
-
-function getMagnitude(coord) {
-  return Math.sqrt(square(coord.x) + square(coord.y))
-}
-
-function rotate(coord, degrees) {
-  const coordDegree = getDegree(coord)
-  const newDegree = normalizeDegree(coordDegree + degrees)
-  const magnitude = getMagnitude(coord)
-  const newX = cos(newDegree) * magnitude
-  const newY = sin(newDegree) * magnitude
-  return new Coord(newX, newY)
-}
-
-function translate(coord, translation) {
-  return new Coord(coord.x + translation.x, coord.y + translation.y)
-}
-
-function getTransform(rotationDegrees, translation) {
-  return (coord) => {
-    const rotated = rotate(coord, rotationDegrees)
-    return translate(rotated, translation)
-  }
-}
-
-function getPolygonPoints(sides) {
-  if (sides < 3) {
-    throw new Error('Polygon must have 3 or more sides.')
-  }
-
-  let points = []
-  points.push(new Coord(1, 0))
-  points.push(new Coord(0, 0))
-
-  const polygonDegrees = getPolygonDegrees(sides)
-  const rotationDegrees = polygonDegrees + 180
-
-  points.push(new Coord(cos(polygonDegrees), sin(polygonDegrees)))
-
-  const translation = new Coord(points[2].x, points[2].y)
-  const transform = getTransform(rotationDegrees, translation)
-
-  const remainingPoints = sides - 3
-  for(let i = 0; i < remainingPoints; i++) {
-    points.push(transform(points[points.length - 1]))
-  }
-
-  return points
-}
+const fs = require('fs')
+const { generateRegularPolygon } = require('./polygon')
+const { pointsToSVG } = require('./svg')
+const Coord = require('./coord')
+const { rotate } = require('./geometry')
 
 function normalizePoints(points, viewbox) {
   const pointsX = points.map(p => p.x)
@@ -115,17 +24,56 @@ function normalizePoints(points, viewbox) {
   })
 }
 
-function pointsToSVG(points, fill) {
-  const pointsStr = points.reduce((acc, point) => {
-    return `${acc} ${point.x},${point.y}`
-  }, '').trim()
-  return `<polygon points="${pointsStr}" fill="${fill}" />`
+function translatePoints(points, translation) {
+  return points.map(point => {
+    return new Coord(point.x + translation.x, point.y + translation.y)
+  })
 }
 
-function makePolygon(sides) {
-  const points = getPolygonPoints(sides)
-  const normalized = normalizePoints(points, 1000)
-  return pointsToSVG(normalized, '#ED6E46')
+function rotatePoints(points, rotationDegrees) {
+  return points.map(point => {
+    return rotate(point, rotationDegrees)
+  })
 }
 
-console.log(makePolygon(3))
+function makePolygon(sides, rotationDegrees, translation) {
+  let points = generateRegularPolygon(sides)
+  if (rotationDegrees) {
+    points = rotatePoints(points, rotationDegrees)
+  }
+  points = normalizePoints(points, 1000)
+  if (translation) {
+    points = translatePoints(points, translation)
+  }
+  return points
+}
+
+function difference(a, b) {
+  return new Coord(a.x - b.x, a.y - b.y)
+}
+
+const offset = new Coord(2000, 2000)
+const poly_1 = makePolygon(5, null, offset)
+const rotated = makePolygon(5, 36, offset)
+
+const poly_2 = translatePoints(rotated, difference(poly_1[1], rotated[0]))
+const poly_3 = translatePoints(rotated, difference(poly_1[1], rotated[3]))
+const poly_4 = translatePoints(rotated, difference(poly_1[0], rotated[2]))
+const poly_5 = translatePoints(rotated, difference(poly_1[4], rotated[1]))
+const poly_6 = translatePoints(rotated, difference(poly_1[2], rotated[1]))
+
+const canvas = `\
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" width="200px" height="200px" viewBox="0 0 4000 4000">
+  ${pointsToSVG(poly_1, '#ED6E46')}
+  ${pointsToSVG(poly_2, '#4286f4')}
+  ${pointsToSVG(poly_3, '#4286f4')}
+  ${pointsToSVG(poly_4, '#4286f4')}
+  ${pointsToSVG(poly_5, '#4286f4')}
+  ${pointsToSVG(poly_6, '#4286f4')}
+</svg>
+`
+
+fs.writeFile('pentagon.svg', canvas, () => {
+  console.log('done')
+})

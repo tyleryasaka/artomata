@@ -1,4 +1,9 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" width="200px" height="200px" viewBox="0 0 1000 1000">
-  <polygon points="1000,0 0,0 500,866" fill="#ED6E46" />
+<svg xmlns="http://www.w3.org/2000/svg" width="200px" height="200px" viewBox="0 0 4000 4000">
+  <polygon points="2809,2000 2191,2000 2000,2588 2500,2951 3000,2588" fill="#ED6E46" />
+  <polygon points="2191,2000 1691,1637 1191,2000 1382,2588 2000,2588" fill="#4286f4" />
+  <polygon points="3000,1412 2500,1049 2000,1412 2191,2000 2809,2000" fill="#4286f4" />
+  <polygon points="3809,2000 3309,1637 2809,2000 3000,2588 3618,2588" fill="#4286f4" />
+  <polygon points="3500,2951 3000,2588 2500,2951 2691,3539 3309,3539" fill="#4286f4" />
+  <polygon points="2500,2951 2000,2588 1500,2951 1691,3539 2309,3539" fill="#4286f4" />
 </svg>
