@@ -95,7 +95,7 @@ function getPolygonPoints(sides) {
   return points
 }
 
-function normalizePoints(points, scale) {
+function normalizePoints(points, viewbox) {
   const pointsX = points.map(p => p.x)
   const pointsY = points.map(p => p.y)
   const minX = Math.min(...pointsX)
@@ -104,12 +104,13 @@ function normalizePoints(points, scale) {
   const maxY = Math.max(...pointsY)
   const translateX = -minX
   const translateY = -minY
-  const scaleX = scale / (maxX + translateX)
-  const scaleY = scale / (maxY + translateY)
+  const scaleX = viewbox / (maxX + translateX)
+  const scaleY = viewbox / (maxY + translateY)
+  const scale = Math.min(scaleX, scaleY)
   return points.map(point => {
     return new Coord(
-      Math.round((point.x + translateX) * scaleX),
-      Math.round((point.y + translateY) * scaleY)
+      Math.round((point.x + translateX) * scale),
+      Math.round((point.y + translateY) * scale)
     )
   })
 }
@@ -122,8 +123,9 @@ function pointsToSVG(points, fill) {
 }
 
 function makePolygon(sides) {
-  const points = normalizePoints(getPolygonPoints(sides), 1000)
-  return pointsToSVG(points, '#ED6E46')
+  const points = getPolygonPoints(sides)
+  const normalized = normalizePoints(points, 1000)
+  return pointsToSVG(normalized, '#ED6E46')
 }
 
-console.log(makePolygon(7))
+console.log(makePolygon(3))
