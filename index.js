@@ -3,26 +3,10 @@ const { generateRegularPolygon } = require('./polygon')
 const { pointsToSVG } = require('./svg')
 const Coord = require('./coord')
 const { rotate } = require('./geometry')
-
-function normalizePoints(points, viewbox) {
-  const pointsX = points.map(p => p.x)
-  const pointsY = points.map(p => p.y)
-  const minX = Math.min(...pointsX)
-  const minY = Math.min(...pointsY)
-  const maxX = Math.max(...pointsX)
-  const maxY = Math.max(...pointsY)
-  const translateX = -minX
-  const translateY = -minY
-  const scaleX = viewbox / (maxX + translateX)
-  const scaleY = viewbox / (maxY + translateY)
-  const scale = Math.min(scaleX, scaleY)
-  return points.map(point => {
-    return new Coord(
-      Math.round((point.x + translateX) * scale),
-      Math.round((point.y + translateY) * scale)
-    )
-  })
-}
+const {
+  colors,
+  rings
+} = require('./settings')
 
 function normalizeCanvas(polygons) {
   const minXByPoly = polygons.map(points => {
@@ -118,13 +102,6 @@ const quadrantNeighbors = [
   }
 ]
 
-const background = '#FFEEF2'
-
-const fills = {
-  '1': '#FFE4F3',
-  '2': '#FF92C2'
-}
-
 const template_1 = makePolygon(5, null, new Coord(-0.5, -0.5))
 const template_2 = makePolygon(5, 36, new Coord(-0.5, -0.5))
 
@@ -142,7 +119,7 @@ class Pentagon {
   }
 
   toSVG(offset) {
-    return pointsToSVG(this.points, fills[this.type], new Coord(offset.x, offset.y))
+    return pointsToSVG(this.points, colors[this.type], new Coord(offset.x, offset.y))
   }
 }
 
@@ -202,11 +179,9 @@ function flower(pentagons, maxLevel, level) {
   }
 }
 
-flower(pentagons, 20, 1)
+flower(pentagons, rings, 1)
 
 const canvasConfig = normalizeCanvas(pentagons.map(p => p.points))
-
-console.log('canvas', canvasConfig)
 
 const polySVG = pentagons.map(p => {
   return p.toSVG(new Coord(canvasConfig.offset.x, canvasConfig.offset.y))
@@ -216,7 +191,7 @@ const polySVG = pentagons.map(p => {
 
 const canvas = `\
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="0 0 ${canvasConfig.range} ${canvasConfig.range}" style="background${background}">
+<svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 ${canvasConfig.range} ${canvasConfig.range}" style="background${colors.background}">
   ${polySVG}
 </svg>
 `
