@@ -31,10 +31,7 @@ function normalizeCanvas(polygons) {
   const rangeY = maxY - minY
   const range = Math.max(rangeX, rangeY)
   return {
-    offset: {
-      x: -minX,
-      y: -minY
-    },
+    offset: new Coord(-minX, -minY),
     range
   }
 }
@@ -196,6 +193,6 @@ const canvas = `\
 </svg>
 `
 
-fs.writeFile('pentagon.svg', canvas, () => {
+fs.writeFile('pentaflower.svg', canvas, () => {
   console.log('done')
 })
