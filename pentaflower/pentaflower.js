@@ -1,8 +1,8 @@
 const fs = require('fs')
-const { generateRegularPolygon } = require('./polygon')
-const { pointsToSVG } = require('./svg')
-const Coord = require('./coord')
-const { rotate } = require('./geometry')
+const { generateRegularPolygon } = require('../lib/polygon')
+const { pointsToSVG } = require('../lib/svg')
+const Coord = require('../lib/coord')
+const { rotate } = require('../lib/geometry')
 const {
   colors,
   rings
@@ -193,6 +193,6 @@ const canvas = `\
 </svg>
 `
 
-fs.writeFile('pentaflower.svg', canvas, () => {
-  console.log('done')
+fs.writeFile('pentaflower/pentaflower.svg', canvas, () => {
+  console.log('wrote to file pentaflower.svg')
 })

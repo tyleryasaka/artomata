@@ -1,0 +1,16 @@
+{
+  "name": "artomata",
+  "version": "0.0.0",
+  "description": "art + cellular automata",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pentaflower": "node pentaflower/pentaflower.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tyleryasaka/artomata"
+  },
+  "author": "Tyler Yasaka",
+  "license": "CC0-1.0"
+}
