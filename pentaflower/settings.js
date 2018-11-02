@@ -1,8 +1,8 @@
 module.exports = {
   colors: {
-    '1': '#3C5A14',
-    '2': '#71B340',
-    background: '#11270B',
+    '1': '#F1D302',
+    '2': '#C1292E',
+    background: '#235789',
   },
-  rings: 40
+  rings: 14
 }
