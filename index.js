@@ -93,7 +93,7 @@ const fills = {
   '2': '#4286f4'
 }
 
-const offset = new Coord(7000, 7000)
+const offset = new Coord(18000, 18000)
 
 const template_1 = makePolygon(5, null, offset)
 const template_2 = makePolygon(5, 36, offset)
@@ -117,11 +117,11 @@ class Pentagon {
 }
 
 const poly_1 = template_1
-const poly_2 = translatePoints(template_2, difference(poly_1[1], template_2[0]))
-const poly_3 = translatePoints(template_2, difference(poly_1[1], template_2[3]))
-const poly_4 = translatePoints(template_2, difference(poly_1[0], template_2[2]))
-const poly_5 = translatePoints(template_2, difference(poly_1[4], template_2[1]))
-const poly_6 = translatePoints(template_2, difference(poly_1[2], template_2[1]))
+const poly_2 = translatePoints(template_2, difference(poly_1[1], template_2[3]))
+const poly_3 = translatePoints(template_2, difference(poly_1[0], template_2[2]))
+const poly_4 = translatePoints(template_2, difference(poly_1[4], template_2[1]))
+const poly_5 = translatePoints(template_2, difference(poly_1[2], template_2[1]))
+const poly_6 = translatePoints(template_2, difference(poly_1[1], template_2[0]))
 const pentagons = [
   new Pentagon(poly_1, '1'),
   new Pentagon(poly_2, '2'),
@@ -139,15 +139,25 @@ function totalCountAtLevel(l) {
 }
 
 function flower(pentagons, maxLevel, level) {
-  if (level <= maxLevel) {
+  if (level < maxLevel) {
     const forLevelStart = totalCountAtLevel(level - 1)
-    console.log('start', forLevelStart)
     const forLevelEnd = totalCountAtLevel(level)
-    for(var i = forLevelStart; i < forLevelEnd; i++) {
+    const type = ((level % 2) === 0) ? '1' : '2'
+    const nextType = (type === '1') ? '2' : '1'
+    const iteration = []
+    if (type === '2') {
+      for(var i = forLevelStart + 1; i < forLevelEnd; i++) {
+        iteration.push(i)
+      }
+      iteration.push(forLevelStart)
+    } else {
+      for(var i = forLevelStart; i < forLevelEnd; i++) {
+        iteration.push(i)
+      }
+    }
+    iteration.forEach(i => {
       const quadrant = Math.floor((i - forLevelStart) / level)
       const isFirst = (i % level) === 0
-      const type = ((level % 2) === 0) ? '1' : '2'
-      const nextType = (type === '1') ? '2' : '1'
       if (isFirst) {
         const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
         const firstPoints = pentagons[i].addNeighbor(firstNeighbor)
@@ -156,12 +166,12 @@ function flower(pentagons, maxLevel, level) {
       const neighbor = quadrantNeighbors[quadrant][type].neighbor
       const points = pentagons[i].addNeighbor(neighbor)
       pentagons.push(new Pentagon(points, nextType))
-    }
+    })
     flower(pentagons, maxLevel, level + 1)
   }
 }
 
-flower(pentagons, 10, 1)
+flower(pentagons, 30, 1)
 
 const polySVG = pentagons.map(p => {
   return p.toSVG()
@@ -171,7 +181,7 @@ const polySVG = pentagons.map(p => {
 
 const canvas = `\
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" width="1000px" height="1000px" viewBox="0 0 20000 20000">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000px" height="1000px" viewBox="0 0 50000 50000">
   ${polySVG}
 </svg>
 `
