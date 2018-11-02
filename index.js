@@ -24,6 +24,37 @@ function normalizePoints(points, viewbox) {
   })
 }
 
+function normalizeCanvas(polygons) {
+  const minXByPoly = polygons.map(points => {
+    return Math.min(...(points.map(p => p.x)))
+  })
+  const minYByPoly = polygons.map(points => {
+    return Math.min(...(points.map(p => p.y)))
+  })
+  const maxXByPoly = polygons.map(points => {
+    return Math.max(...(points.map(p => p.x)))
+  })
+  const maxYByPoly = polygons.map(points => {
+    return Math.max(...(points.map(p => p.y)))
+  })
+  const minX = Math.min(...minXByPoly)
+  const minY = Math.min(...minYByPoly)
+  const maxX = Math.max(...maxXByPoly)
+  const maxY = Math.max(...maxYByPoly)
+  const translateX = minX
+  const translateY = minY
+  const rangeX = maxX - minX
+  const rangeY = maxY - minY
+  const range = Math.max(rangeX, rangeY)
+  return {
+    offset: {
+      x: -minX,
+      y: -minY
+    },
+    range
+  }
+}
+
 function translatePoints(points, translation) {
   return points.map(point => {
     return new Coord(point.x + translation.x, point.y + translation.y)
@@ -41,7 +72,6 @@ function makePolygon(sides, rotationDegrees, translation) {
   if (rotationDegrees) {
     points = rotatePoints(points, rotationDegrees)
   }
-  points = normalizePoints(points, 1000)
   if (translation) {
     points = translatePoints(points, translation)
   }
@@ -88,15 +118,15 @@ const quadrantNeighbors = [
   }
 ]
 
+const background = '#FFEEF2'
+
 const fills = {
-  '1': '#ED6E46',
-  '2': '#4286f4'
+  '1': '#FFE4F3',
+  '2': '#FF92C2'
 }
 
-const offset = new Coord(18000, 18000)
-
-const template_1 = makePolygon(5, null, offset)
-const template_2 = makePolygon(5, 36, offset)
+const template_1 = makePolygon(5, null, new Coord(-0.5, -0.5))
+const template_2 = makePolygon(5, 36, new Coord(-0.5, -0.5))
 
 class Pentagon {
   constructor(points, type) {
@@ -111,17 +141,17 @@ class Pentagon {
     return translatePoints(template, difference(this.points[t[0]], template[t[1]]))
   }
 
-  toSVG() {
-    return pointsToSVG(this.points, fills[this.type])
+  toSVG(offset) {
+    return pointsToSVG(this.points, fills[this.type], new Coord(offset.x, offset.y))
   }
 }
 
 const poly_1 = template_1
-const poly_2 = translatePoints(template_2, difference(poly_1[1], template_2[3]))
-const poly_3 = translatePoints(template_2, difference(poly_1[0], template_2[2]))
-const poly_4 = translatePoints(template_2, difference(poly_1[4], template_2[1]))
-const poly_5 = translatePoints(template_2, difference(poly_1[2], template_2[1]))
-const poly_6 = translatePoints(template_2, difference(poly_1[1], template_2[0]))
+const poly_2 = translatePoints(template_2, difference(poly_1[1], template_2[0]))
+const poly_3 = translatePoints(template_2, difference(poly_1[1], template_2[3]))
+const poly_4 = translatePoints(template_2, difference(poly_1[0], template_2[2]))
+const poly_5 = translatePoints(template_2, difference(poly_1[4], template_2[1]))
+const poly_6 = translatePoints(template_2, difference(poly_1[2], template_2[1]))
 const pentagons = [
   new Pentagon(poly_1, '1'),
   new Pentagon(poly_2, '2'),
@@ -146,42 +176,47 @@ function flower(pentagons, maxLevel, level) {
     const nextType = (type === '1') ? '2' : '1'
     const iteration = []
     if (type === '2') {
-      for(var i = forLevelStart + 1; i < forLevelEnd; i++) {
-        iteration.push(i)
+      for(var p = forLevelStart + 1; p < forLevelEnd; p++) {
+        iteration.push(p)
       }
       iteration.push(forLevelStart)
     } else {
-      for(var i = forLevelStart; i < forLevelEnd; i++) {
-        iteration.push(i)
+      for(var p = forLevelStart; p < forLevelEnd; p++) {
+        iteration.push(p)
       }
     }
-    iteration.forEach(i => {
+    iteration.forEach((p, h) => {
+      i = h + forLevelStart
       const quadrant = Math.floor((i - forLevelStart) / level)
-      const isFirst = (i % level) === 0
+      const isFirst = (h % level) === 0
       if (isFirst) {
         const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
-        const firstPoints = pentagons[i].addNeighbor(firstNeighbor)
+        const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
         pentagons.push(new Pentagon(firstPoints, nextType))
       }
       const neighbor = quadrantNeighbors[quadrant][type].neighbor
-      const points = pentagons[i].addNeighbor(neighbor)
+      const points = pentagons[p].addNeighbor(neighbor)
       pentagons.push(new Pentagon(points, nextType))
     })
     flower(pentagons, maxLevel, level + 1)
   }
 }
 
-flower(pentagons, 30, 1)
+flower(pentagons, 20, 1)
+
+const canvasConfig = normalizeCanvas(pentagons.map(p => p.points))
+
+console.log('canvas', canvasConfig)
 
 const polySVG = pentagons.map(p => {
-  return p.toSVG()
+  return p.toSVG(new Coord(canvasConfig.offset.x, canvasConfig.offset.y))
 }).reduce((acc, svg) => {
   return `${acc}\n${svg}`
 })
 
 const canvas = `\
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" width="1000px" height="1000px" viewBox="0 0 50000 50000">
+<svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="0 0 ${canvasConfig.range} ${canvasConfig.range}" style="background${background}">
   ${polySVG}
 </svg>
 `
