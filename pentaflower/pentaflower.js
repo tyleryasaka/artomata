@@ -103,13 +103,17 @@ const template_1 = makePolygon(5, null, new Coord(-0.5, -0.5))
 const template_2 = makePolygon(5, 36, new Coord(-0.5, -0.5))
 
 class Pentagon {
-  constructor(points, type, level) {
+  constructor(points, type, level, index) {
     this.points = points
     this.type = type
     this.level = level
+    this.index = index
   }
 
   getColor() {
+    if (this.index % 5 === 2) {
+      return '#C95D63'
+    }
     if (this.level % 4 === 0) {
       return '#EE8434'
     } else if (this.level % 4 === 1) {
@@ -141,12 +145,12 @@ const poly_4 = translatePoints(template_2, difference(poly_1[0], template_2[2]))
 const poly_5 = translatePoints(template_2, difference(poly_1[4], template_2[1]))
 const poly_6 = translatePoints(template_2, difference(poly_1[2], template_2[1]))
 const pentagons = [
-  new Pentagon(poly_1, '1', 0),
-  new Pentagon(poly_2, '2', 1),
-  new Pentagon(poly_3, '2', 1),
-  new Pentagon(poly_4, '2', 1),
-  new Pentagon(poly_5, '2', 1),
-  new Pentagon(poly_6, '2', 1)
+  new Pentagon(poly_1, '1', 0, 0),
+  new Pentagon(poly_2, '2', 1, 0),
+  new Pentagon(poly_3, '2', 1, 1),
+  new Pentagon(poly_4, '2', 1, 2),
+  new Pentagon(poly_5, '2', 1, 3),
+  new Pentagon(poly_6, '2', 1, 4)
 ]
 
 function totalCountAtLevel(l) {
@@ -180,11 +184,11 @@ function flower(pentagons, maxLevel, level) {
       if (isFirst) {
         const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
         const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
-        pentagons.push(new Pentagon(firstPoints, nextType, level + 1))
+        pentagons.push(new Pentagon(firstPoints, nextType, level + 1, h))
       }
       const neighbor = quadrantNeighbors[quadrant][type].neighbor
       const points = pentagons[p].addNeighbor(neighbor)
-      pentagons.push(new Pentagon(points, nextType, level + 1))
+      pentagons.push(new Pentagon(points, nextType, level + 1, h))
     })
     flower(pentagons, maxLevel, level + 1)
   }
