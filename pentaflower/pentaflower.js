@@ -114,34 +114,34 @@ class Pentagon {
 
   getColor() {
     if (this.subQuad === 0) {
-      return '#401F3E'
+      return '#EE8434'
     }
     if (this.subQuad === 1) {
-      return '#3F2E56'
+      return '#C36D2B'
     }
     if (this.subQuad === 2) {
-      return '#453F78'
+      return '#C95D63'
     }
     if (this.subQuad === 3) {
-      return '#759AAB'
+      return '#A54D52'
     }
     if (this.subQuad === 4) {
-      return '#FAF2A1'
+      return '#AE8799'
     }
     if (this.subQuad === 5) {
-      return '#351A33'
+      return '#8F6F7E'
     }
     if (this.subQuad === 6) {
-      return '#3F2E56'
+      return '#717EC3'
     }
     if (this.subQuad === 7) {
-      return '#453F78'
+      return '#5D68A0'
     }
     if (this.subQuad === 8) {
-      return '#759AAB'
+      return '#496DDB'
     }
     if (this.subQuad === 9) {
-      return '#FAF2A1'
+      return '#3C5AB4'
     }
     // if (this.index % 5 === 2) {
     //   return '#C95D63'
