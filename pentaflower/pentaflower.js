@@ -108,21 +108,37 @@ class Pentagon {
     this.type = type
     this.level = level
     this.index = index
+    this.quadrant = Math.floor(index / level)
   }
 
   getColor() {
-    if (this.index % 5 === 2) {
-      return '#C95D63'
-    }
-    if (this.level % 4 === 0) {
+    if (this.quadrant === 0) {
       return '#EE8434'
-    } else if (this.level % 4 === 1) {
+    }
+    if (this.quadrant === 1) {
       return '#AE8799'
-    } else if (this.level % 4 === 2) {
+    }
+    if (this.quadrant === 2) {
       return '#717EC3'
-    } else {
+    }
+    if (this.quadrant === 3) {
       return '#496DDB'
     }
+    if (this.quadrant === 4) {
+      return '#AE8799'
+    }
+    // if (this.index % 5 === 2) {
+    //   return '#C95D63'
+    // }
+    // if (this.level % 4 === 0) {
+    //   return '#EE8434'
+    // } else if (this.level % 4 === 1) {
+    //   return '#AE8799'
+    // } else if (this.level % 4 === 2) {
+    //   return '#717EC3'
+    // } else {
+    //   return '#496DDB'
+    // }
     return colors[this.type]
   }
 
@@ -146,11 +162,11 @@ const poly_5 = translatePoints(template_2, difference(poly_1[4], template_2[1]))
 const poly_6 = translatePoints(template_2, difference(poly_1[2], template_2[1]))
 const pentagons = [
   new Pentagon(poly_1, '1', 0, 0),
-  new Pentagon(poly_2, '2', 1, 0),
-  new Pentagon(poly_3, '2', 1, 1),
-  new Pentagon(poly_4, '2', 1, 2),
-  new Pentagon(poly_5, '2', 1, 3),
-  new Pentagon(poly_6, '2', 1, 4)
+  new Pentagon(poly_3, '2', 1, 0),
+  new Pentagon(poly_4, '2', 1, 1),
+  new Pentagon(poly_5, '2', 1, 2),
+  new Pentagon(poly_6, '2', 1, 3),
+  new Pentagon(poly_2, '2', 1, 4)
 ]
 
 function totalCountAtLevel(l) {
@@ -167,7 +183,8 @@ function flower(pentagons, maxLevel, level) {
     const type = ((level % 2) === 0) ? '1' : '2'
     const nextType = (type === '1') ? '2' : '1'
     const iteration = []
-    if (type === '2') {
+    if (false) {
+    // if (type === '2') {
       for(var p = forLevelStart + 1; p < forLevelEnd; p++) {
         iteration.push(p)
       }
