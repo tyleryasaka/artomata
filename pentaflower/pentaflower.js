@@ -78,23 +78,23 @@ const neighborTransformations = {
 
 const quadrantNeighbors = [
   {
-    '1': { firstNeighbor: 'e', neighbor: 'a' },
+    '1': { firstNeighbor: 'b', neighbor: 'a' },
     '2': { firstNeighbor: 'f', neighbor: 'g' }
   },
   {
-    '1': { firstNeighbor: 'a', neighbor: 'b' },
+    '1': { firstNeighbor: 'c', neighbor: 'b' },
     '2': { firstNeighbor: 'g', neighbor: 'h' }
   },
   {
-    '1': { firstNeighbor: 'b', neighbor: 'c' },
+    '1': { firstNeighbor: 'd', neighbor: 'c' },
     '2': { firstNeighbor: 'h', neighbor: 'i' }
   },
   {
-    '1': { firstNeighbor: 'c', neighbor: 'd' },
+    '1': { firstNeighbor: 'e', neighbor: 'd' },
     '2': { firstNeighbor: 'i', neighbor: 'j' }
   },
   {
-    '1': { firstNeighbor: 'd', neighbor: 'e' },
+    '1': { firstNeighbor: 'a', neighbor: 'e' },
     '2': { firstNeighbor: 'j', neighbor: 'f' }
   }
 ]
@@ -108,7 +108,7 @@ class Pentagon {
     this.type = type
     this.level = level
     this.index = index
-    this.quadrant = Math.floor(index / level)
+    this.quadrant = Math.floor(index / (level - 1))
   }
 
   getColor() {
@@ -161,12 +161,12 @@ const poly_4 = translatePoints(template_2, difference(poly_1[0], template_2[2]))
 const poly_5 = translatePoints(template_2, difference(poly_1[4], template_2[1]))
 const poly_6 = translatePoints(template_2, difference(poly_1[2], template_2[1]))
 const pentagons = [
-  new Pentagon(poly_1, '1', 0, 0),
-  new Pentagon(poly_3, '2', 1, 0),
-  new Pentagon(poly_4, '2', 1, 1),
-  new Pentagon(poly_5, '2', 1, 2),
-  new Pentagon(poly_6, '2', 1, 3),
-  new Pentagon(poly_2, '2', 1, 4)
+  new Pentagon(poly_1, '1', 1, 0),
+  new Pentagon(poly_3, '2', 2, 0),
+  new Pentagon(poly_4, '2', 2, 1),
+  new Pentagon(poly_5, '2', 2, 2),
+  new Pentagon(poly_6, '2', 2, 3),
+  new Pentagon(poly_2, '2', 2, 4)
 ]
 
 function totalCountAtLevel(l) {
@@ -183,22 +183,15 @@ function flower(pentagons, maxLevel, level) {
     const type = ((level % 2) === 0) ? '1' : '2'
     const nextType = (type === '1') ? '2' : '1'
     const iteration = []
-    if (false) {
-    // if (type === '2') {
-      for(var p = forLevelStart + 1; p < forLevelEnd; p++) {
-        iteration.push(p)
-      }
-      iteration.push(forLevelStart)
-    } else {
-      for(var p = forLevelStart; p < forLevelEnd; p++) {
-        iteration.push(p)
-      }
+    for(var p = forLevelStart; p < forLevelEnd; p++) {
+      iteration.push(p)
     }
     iteration.forEach((p, h) => {
       i = h + forLevelStart
       const quadrant = Math.floor((i - forLevelStart) / level)
       const isFirst = (h % level) === 0
-      if (isFirst) {
+      const isLast = (h % level) === (level - 1)
+      if (type === '2' && isFirst) {
         const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
         const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
         pentagons.push(new Pentagon(firstPoints, nextType, level + 1, h))
@@ -206,6 +199,11 @@ function flower(pentagons, maxLevel, level) {
       const neighbor = quadrantNeighbors[quadrant][type].neighbor
       const points = pentagons[p].addNeighbor(neighbor)
       pentagons.push(new Pentagon(points, nextType, level + 1, h))
+      if (type === '1' && isLast) {
+        const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
+        const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
+        pentagons.push(new Pentagon(firstPoints, nextType, level + 1, h))
+      }
     })
     flower(pentagons, maxLevel, level + 1)
   }
