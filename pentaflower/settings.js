@@ -2,7 +2,7 @@ module.exports = {
   colors: {
     '1': '#496DDB',
     '2': '#EE8434',
-    background: '#000',
+    background: '#C2B7FF',
   },
   rings: 40
 }

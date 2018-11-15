@@ -110,51 +110,52 @@ class Pentagon {
     this.index = index
     this.quadrant = Math.ceil(index / level)
     this.subQuad = Math.ceil((2 * index) / level) % 10
+    this.isFirst = (index % level) === 0
+    this.isLast = (index % level) === (level - 1)
+    const isEven = (this.subQuad % 2) === 0
+    this.altType = ((type === '2') && isEven) || ((type === '1') && !isEven) ? 'a' : 'b'
+    this.hasTwoNeighbors = this.altType === 'b'
   }
 
   getColor() {
-    if (this.subQuad === 0) {
-      return '#EE8434'
-    }
-    if (this.subQuad === 1) {
-      return '#C36D2B'
-    }
-    if (this.subQuad === 2) {
-      return '#C95D63'
-    }
-    if (this.subQuad === 3) {
-      return '#A54D52'
-    }
-    if (this.subQuad === 4) {
-      return '#AE8799'
-    }
-    if (this.subQuad === 5) {
-      return '#8F6F7E'
-    }
-    if (this.subQuad === 6) {
-      return '#717EC3'
-    }
-    if (this.subQuad === 7) {
-      return '#5D68A0'
-    }
-    if (this.subQuad === 8) {
-      return '#496DDB'
-    }
-    if (this.subQuad === 9) {
-      return '#3C5AB4'
-    }
+    // if (this.subQuad === 0) {
+    //   return '#EE8434'
+    // }
+    // if (this.subQuad === 1) {
+    //   return '#C36D2B'
+    // }
+    // if (this.subQuad === 2) {
+    //   return '#C95D63'
+    // }
+    // if (this.subQuad === 3) {
+    //   return '#A54D52'
+    // }
+    // if (this.subQuad === 4) {
+    //   return '#AE8799'
+    // }
+    // if (this.subQuad === 5) {
+    //   return '#8F6F7E'
+    // }
+    // if (this.subQuad === 6) {
+    //   return '#717EC3'
+    // }
+    // if (this.subQuad === 7) {
+    //   return '#5D68A0'
+    // }
+    // if (this.subQuad === 8) {
+    //   return '#496DDB'
+    // }
+    // if (this.subQuad === 9) {
+    //   return '#3C5AB4'
+    // }
     // if (this.index % 5 === 2) {
     //   return '#C95D63'
     // }
-    // if (this.level % 4 === 0) {
-    //   return '#EE8434'
-    // } else if (this.level % 4 === 1) {
-    //   return '#AE8799'
-    // } else if (this.level % 4 === 2) {
-    //   return '#717EC3'
-    // } else {
-    //   return '#496DDB'
-    // }
+    if (this.hasTwoNeighbors) {
+      return '#9381FF'
+    } else {
+      return '#F8F7FF'
+    }
     return colors[this.type]
   }
 
