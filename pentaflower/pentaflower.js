@@ -114,7 +114,7 @@ class Pentagon {
     this.isLast = (index % level) === (level - 1)
     const isEven = (this.subQuad % 2) === 0
     this.altType = ((type === '2') && isEven) || ((type === '1') && !isEven) ? 'a' : 'b'
-    this.isLastInSub = (index % Math.ceil(level / 2)) === (Math.ceil(level / 2) - 1)
+    this.isLastInSub = ((2 * index) % level) === (level / 2) - 1
     this.hasTwoNeighbors = this.altType === 'b'
   }
 
