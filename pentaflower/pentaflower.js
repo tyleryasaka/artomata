@@ -204,7 +204,6 @@ function flower(pentagons, maxLevel, level) {
     }
     let index = 0
     iteration.forEach((p, h) => {
-      i = h + forLevelStart
       const quadrant = Math.floor(h / level)
       const isFirst = (h % level) === 0
       const isLast = (h % level) === (level - 1)
