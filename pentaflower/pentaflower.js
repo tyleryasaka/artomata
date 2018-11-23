@@ -114,8 +114,9 @@ class Pentagon {
     this.isLast = (index % level) === (level - 1)
     const isEven = (this.subQuad % 2) === 0
     this.altType = ((type === '2') && isEven) || ((type === '1') && !isEven) ? 'a' : 'b'
-    this.isLastInSub = ((2 * index) % level) === (level / 2) - 1
-    this.hasTwoNeighbors = this.altType === 'b'
+    console.log(index % Math.floor(level / 2))
+    this.isLastInSub = (index % (level / 2)) === 0
+    this.hasTwoNeighbors = (this.altType === 'b') && this.isLastInSub
   }
 
   getColor() {
@@ -152,9 +153,9 @@ class Pentagon {
     // if (this.index % 5 === 2) {
     //   return '#C95D63'
     // }
-    if(this.isLastInSub) {
-      return '#496DDB'
-    }
+    // if(this.isLastInSub) {
+    //   return '#496DDB'
+    // }
     if (this.hasTwoNeighbors) {
       return '#9381FF'
     } else {
