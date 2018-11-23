@@ -116,7 +116,7 @@ class Pentagon {
     this.altType = ((type === '2') && isEven) || ((type === '1') && !isEven) ? 'a' : 'b'
     console.log(index % Math.floor(level / 2))
     this.isLastInSub = (index % (level / 2)) === 0
-    this.hasTwoNeighbors = (this.altType === 'b') && this.isLastInSub
+    this.hasTwoNeighbors = (this.altType === 'b') || ((this.altType === 'a') && this.isLastInSub)
   }
 
   getColor() {
