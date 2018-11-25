@@ -119,47 +119,11 @@ class Pentagon {
   }
 
   getColor () {
-    // if (this.subQuad === 0) {
-    //   return '#EE8434'
-    // }
-    // if (this.subQuad === 1) {
-    //   return '#C36D2B'
-    // }
-    // if (this.subQuad === 2) {
-    //   return '#C95D63'
-    // }
-    // if (this.subQuad === 3) {
-    //   return '#A54D52'
-    // }
-    // if (this.subQuad === 4) {
-    //   return '#AE8799'
-    // }
-    // if (this.subQuad === 5) {
-    //   return '#8F6F7E'
-    // }
-    // if (this.subQuad === 6) {
-    //   return '#717EC3'
-    // }
-    // if (this.subQuad === 7) {
-    //   return '#5D68A0'
-    // }
-    // if (this.subQuad === 8) {
-    //   return '#496DDB'
-    // }
-    // if (this.subQuad === 9) {
-    //   return '#3C5AB4'
-    // }
-    // if (this.index % 5 === 2) {
-    //   return '#C95D63'
-    // }
-    // if(this.isLastInSub) {
-    //   return '#496DDB'
-    // }
     const i = 39
     if (this.state) {
-      return '#C36D2B'
+      return colors['1']
     } else {
-      return '#5D68A0'
+      return colors['2']
     }
   }
 
@@ -191,6 +155,12 @@ class Pentaflower {
       new Pentagon(poly6, '2', 1, 3),
       new Pentagon(poly2, '2', 1, 4)
     ]
+
+    const first = pentagons[0]
+    for (var i = 1; i <= 5; i++) {
+      pentagons[i].neighbors.push(first)
+      first.neighbors.push(pentagons[i])
+    }
 
     function totalCountAtLevel (l) {
       if (l === 0) {
@@ -271,7 +241,7 @@ class Pentaflower {
       const penta = pentagons[p]
       penta.prevState = penta.state
       const count = penta.neighbors.filter(n => n.prevState).length
-      penta.state = (count === 1 || count === 2)
+      penta.state = (count !== 0 && count !== penta.neighbors.length)
     }
   }
 
