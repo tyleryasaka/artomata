@@ -26,10 +26,10 @@ function normalizeCanvas (polygons) {
   const maxY = Math.max(...maxYByPoly)
   const rangeX = maxX - minX
   const rangeY = maxY - minY
-  const range = Math.max(rangeX, rangeY)
   return {
     offset: new Coord(-minX, -minY),
-    range
+    rangeX,
+    rangeY
   }
 }
 
@@ -256,7 +256,8 @@ class Pentaflower {
 
   render () {
     const canvasConfig = normalizeCanvas(this.pentagons.map(p => p.points))
-    const fifth = canvasConfig.range / 5
+    const fifthX = canvasConfig.rangeX / 5
+    const fifthY = canvasConfig.rangeY / 5
 
     const polySVG = this.pentagons.map(p => {
       return p.toSVG(new Coord(canvasConfig.offset.x, canvasConfig.offset.y))
@@ -266,7 +267,7 @@ class Pentaflower {
 
     return `\
     <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-    <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="${fifth} ${fifth} ${canvasConfig.range - (2 * fifth)} ${canvasConfig.range - (2 * fifth)}" preserveAspectRatio="xMidYMid slice">
+    <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="${fifthX} ${fifthY} ${canvasConfig.rangeX - (2 * fifthX)} ${canvasConfig.rangeY - (2 * fifthY)}" preserveAspectRatio="xMidYMid slice" style="background: ${colors.background};">
       ${polySVG}
     </svg>
     `
