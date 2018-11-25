@@ -12,5 +12,8 @@
     "url": "git+https://github.com/tyleryasaka/artomata"
   },
   "author": "Tyler Yasaka",
-  "license": "CC0-1.0"
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "lerna": "^3.4.3"
+  }
 }
