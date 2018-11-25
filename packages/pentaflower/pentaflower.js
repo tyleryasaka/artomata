@@ -114,7 +114,7 @@ class Pentagon {
     this.isLastInSub = (index % (level / 2)) === 0
     this.hasTwoNeighbors = (this.altType === 'b') || ((this.altType === 'a') && this.isLastInSub)
     this.neighbors = []
-    this.prevState = false
+    this.nextState = false
     this.state = false
   }
 
@@ -199,7 +199,7 @@ class Pentaflower {
           penta.neighbors.push(pentagons[p])
           pentagons.push(penta)
           pentagons[p].neighbors.push(penta)
-          const prev = pentagons[p - 1]
+          const prev = pentagons[((p - 1) + (level * 5)) % (level * 5)]
           const next = pentagons[p + 1]
           if (prev.hasTwoNeighbors && !prev.isLast && !prev.isFirst && prev.type === '1') {
             penta.neighbors.push(prev)
@@ -232,17 +232,21 @@ class Pentaflower {
   }
 
   setState(index) {
-    this.pentagons[index].prevState = this.pentagons[index].state = true
+    this.pentagons[index].state = true
   }
 
   progress() {
     const pentagons = this.pentagons
-    for (var p = pentagons.length - 1; p >= 0; p--) {
-      const penta = pentagons[p]
-      penta.prevState = penta.state
-      const count = penta.neighbors.filter(n => n.prevState).length
-      penta.state = (count !== 0 && count !== penta.neighbors.length)
-    }
+    this.pentagons.forEach((p, i) => {
+      const count = p.neighbors.filter(n => n.state).length
+      if (i === 6 && p.neighbors.length !== 3) {
+        console.log(p.neighbors)
+      }
+      p.nextState = (count !== 0 && count !== p.neighbors.length)
+    })
+    this.pentagons.forEach(p => {
+      p.state = p.nextState
+    })
   }
 
   render () {
