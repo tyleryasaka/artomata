@@ -114,6 +114,7 @@ class Pentagon {
     this.isLastInSub = (index % (level / 2)) === 0
     this.hasTwoNeighbors = (this.altType === 'b') || ((this.altType === 'a') && this.isLastInSub)
     this.neighbors = []
+    this.prevState = false
     this.state = false
   }
 
@@ -156,7 +157,7 @@ class Pentagon {
     // }
     const i = 39
     if (this.state) {
-      return '#8F6F7E'
+      return '#C36D2B'
     } else {
       return '#5D68A0'
     }
@@ -258,6 +259,20 @@ class Pentaflower {
     }
     flower(pentagons, rings, 1)
     this.pentagons = pentagons
+  }
+
+  setState(index) {
+    this.pentagons[index].prevState = this.pentagons[index].state = true
+  }
+
+  progress() {
+    const pentagons = this.pentagons
+    for (var p = pentagons.length - 1; p >= 0; p--) {
+      const penta = pentagons[p]
+      penta.prevState = penta.state
+      const count = penta.neighbors.filter(n => n.prevState).length
+      penta.state = (count === 1 || count === 2)
+    }
   }
 
   render () {
