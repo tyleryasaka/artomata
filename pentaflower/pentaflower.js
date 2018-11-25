@@ -156,9 +156,13 @@ class Pentagon {
     // if(this.isLastInSub) {
     //   return '#496DDB'
     // }
-    if (this.index === 7) {
+    const i = 28
+    if (this.hasTwoNeighbors) {
+      // return '#000'
+    }
+    if (this.index === i) {
       return '#9381FF'
-    } else if (this.neighbors.filter(n => n.index === 7).length) {
+    } else if (this.neighbors.filter(n => n.index === i).length) {
       return '#F8F7FF'
     }
     return colors[this.type]
@@ -218,6 +222,7 @@ function flower(pentagons, maxLevel, level) {
         const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
         const penta = new Pentagon(firstPoints, nextType, level + 1, index)
         penta.neighbors.push(pentagons[p])
+        pentagons[p].neighbors.push(penta)
         pentagons.push(penta)
         index++
       }
@@ -226,13 +231,30 @@ function flower(pentagons, maxLevel, level) {
       const penta = new Pentagon(points, nextType, level + 1, index)
       penta.neighbors.push(pentagons[p])
       pentagons.push(penta)
+      pentagons[p].neighbors.push(penta)
+      const prev = pentagons[p - 1]
+      const next = pentagons[p + 1]
+      if (prev.hasTwoNeighbors && !prev.isLast && !prev.isFirst && prev.type === '1') {
+        penta.neighbors.push(prev)
+        prev.neighbors.push(penta)
+      } else if (next.hasTwoNeighbors && !next.isLast && !next.isFirst && next.type === '2') {
+        penta.neighbors.push(next)
+        next.neighbors.push(penta)
+      }
       index++
       if (type === '1' && isLast) {
         const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
         const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
         const penta = new Pentagon(firstPoints, nextType, level + 1, index)
         penta.neighbors.push(pentagons[p])
+        pentagons[p].neighbors.push(penta)
         pentagons.push(penta)
+        const prev = pentagons[p - 1]
+        const next = pentagons[p + 1]
+        if (next.hasTwoNeighbors) {
+          penta.neighbors.push(next)
+          next.neighbors.push(penta)
+        }
         index++
       }
     })
