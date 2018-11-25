@@ -114,9 +114,9 @@ class Pentagon {
     this.isLast = (index % level) === (level - 1)
     const isEven = (this.subQuad % 2) === 0
     this.altType = ((type === '2') && isEven) || ((type === '1') && !isEven) ? 'a' : 'b'
-    console.log(index % Math.floor(level / 2))
     this.isLastInSub = (index % (level / 2)) === 0
     this.hasTwoNeighbors = (this.altType === 'b') || ((this.altType === 'a') && this.isLastInSub)
+    this.neighbors = []
   }
 
   getColor() {
@@ -156,9 +156,9 @@ class Pentagon {
     // if(this.isLastInSub) {
     //   return '#496DDB'
     // }
-    if (this.hasTwoNeighbors) {
+    if (this.index === 7) {
       return '#9381FF'
-    } else {
+    } else if (this.neighbors.filter(n => n.index === 7).length) {
       return '#F8F7FF'
     }
     return colors[this.type]
@@ -216,17 +216,23 @@ function flower(pentagons, maxLevel, level) {
       if (type === '2' && isFirst) {
         const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
         const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
-        pentagons.push(new Pentagon(firstPoints, nextType, level + 1, index))
+        const penta = new Pentagon(firstPoints, nextType, level + 1, index)
+        penta.neighbors.push(pentagons[p])
+        pentagons.push(penta)
         index++
       }
       const neighbor = quadrantNeighbors[quadrant][type].neighbor
       const points = pentagons[p].addNeighbor(neighbor)
-      pentagons.push(new Pentagon(points, nextType, level + 1, index))
+      const penta = new Pentagon(points, nextType, level + 1, index)
+      penta.neighbors.push(pentagons[p])
+      pentagons.push(penta)
       index++
       if (type === '1' && isLast) {
         const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
         const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
-        pentagons.push(new Pentagon(firstPoints, nextType, level + 1, index))
+        const penta = new Pentagon(firstPoints, nextType, level + 1, index)
+        penta.neighbors.push(pentagons[p])
+        pentagons.push(penta)
         index++
       }
     })
