@@ -1,4 +1,3 @@
-const fs = require('fs')
 const { generateRegularPolygon } = require('../../lib/polygon')
 const { pointsToSVG } = require('../../lib/svg')
 const Coord = require('../../lib/coord')
@@ -178,104 +177,104 @@ class Pentagon {
   }
 }
 
-const poly1 = template1
-const poly2 = translatePoints(template2, difference(poly1[1], template2[0]))
-const poly3 = translatePoints(template2, difference(poly1[1], template2[3]))
-const poly4 = translatePoints(template2, difference(poly1[0], template2[2]))
-const poly5 = translatePoints(template2, difference(poly1[4], template2[1]))
-const poly6 = translatePoints(template2, difference(poly1[2], template2[1]))
-const pentagons = [
-  new Pentagon(poly1, '1', 0, 0),
-  new Pentagon(poly3, '2', 1, 0),
-  new Pentagon(poly4, '2', 1, 1),
-  new Pentagon(poly5, '2', 1, 2),
-  new Pentagon(poly6, '2', 1, 3),
-  new Pentagon(poly2, '2', 1, 4)
-]
+function pentaflower() {
+  const poly1 = template1
+  const poly2 = translatePoints(template2, difference(poly1[1], template2[0]))
+  const poly3 = translatePoints(template2, difference(poly1[1], template2[3]))
+  const poly4 = translatePoints(template2, difference(poly1[0], template2[2]))
+  const poly5 = translatePoints(template2, difference(poly1[4], template2[1]))
+  const poly6 = translatePoints(template2, difference(poly1[2], template2[1]))
+  const pentagons = [
+    new Pentagon(poly1, '1', 0, 0),
+    new Pentagon(poly3, '2', 1, 0),
+    new Pentagon(poly4, '2', 1, 1),
+    new Pentagon(poly5, '2', 1, 2),
+    new Pentagon(poly6, '2', 1, 3),
+    new Pentagon(poly2, '2', 1, 4)
+  ]
 
-function totalCountAtLevel (l) {
-  if (l === 0) {
-    return 1
-  }
-  return l * 5 + totalCountAtLevel(l - 1)
-}
-
-function flower (pentagons, maxLevel, level) {
-  if (level < maxLevel) {
-    const forLevelStart = totalCountAtLevel(level - 1)
-    const forLevelEnd = totalCountAtLevel(level)
-    const type = ((level % 2) === 0) ? '1' : '2'
-    const nextType = (type === '1') ? '2' : '1'
-    const iteration = []
-    for (var p = forLevelStart; p < forLevelEnd; p++) {
-      iteration.push(p)
+  function totalCountAtLevel (l) {
+    if (l === 0) {
+      return 1
     }
-    let index = 0
-    iteration.forEach((p, h) => {
-      const quadrant = Math.floor(h / level)
-      const isFirst = (h % level) === 0
-      const isLast = (h % level) === (level - 1)
-      if (type === '2' && isFirst) {
-        const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
-        const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
-        const penta = new Pentagon(firstPoints, nextType, level + 1, index)
-        penta.neighbors.push(pentagons[p])
-        pentagons[p].neighbors.push(penta)
-        pentagons.push(penta)
-        index++
+    return l * 5 + totalCountAtLevel(l - 1)
+  }
+
+  function flower (pentagons, maxLevel, level) {
+    if (level < maxLevel) {
+      const forLevelStart = totalCountAtLevel(level - 1)
+      const forLevelEnd = totalCountAtLevel(level)
+      const type = ((level % 2) === 0) ? '1' : '2'
+      const nextType = (type === '1') ? '2' : '1'
+      const iteration = []
+      for (var p = forLevelStart; p < forLevelEnd; p++) {
+        iteration.push(p)
       }
-      const neighbor = quadrantNeighbors[quadrant][type].neighbor
-      const points = pentagons[p].addNeighbor(neighbor)
-      const penta = new Pentagon(points, nextType, level + 1, index)
-      penta.neighbors.push(pentagons[p])
-      pentagons.push(penta)
-      pentagons[p].neighbors.push(penta)
-      const prev = pentagons[p - 1]
-      const next = pentagons[p + 1]
-      if (prev.hasTwoNeighbors && !prev.isLast && !prev.isFirst && prev.type === '1') {
-        penta.neighbors.push(prev)
-        prev.neighbors.push(penta)
-      } else if (next.hasTwoNeighbors && !next.isLast && !next.isFirst && next.type === '2') {
-        penta.neighbors.push(next)
-        next.neighbors.push(penta)
-      }
-      index++
-      if (type === '1' && isLast) {
-        const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
-        const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
-        const penta = new Pentagon(firstPoints, nextType, level + 1, index)
+      let index = 0
+      iteration.forEach((p, h) => {
+        const quadrant = Math.floor(h / level)
+        const isFirst = (h % level) === 0
+        const isLast = (h % level) === (level - 1)
+        if (type === '2' && isFirst) {
+          const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
+          const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
+          const penta = new Pentagon(firstPoints, nextType, level + 1, index)
+          penta.neighbors.push(pentagons[p])
+          pentagons[p].neighbors.push(penta)
+          pentagons.push(penta)
+          index++
+        }
+        const neighbor = quadrantNeighbors[quadrant][type].neighbor
+        const points = pentagons[p].addNeighbor(neighbor)
+        const penta = new Pentagon(points, nextType, level + 1, index)
         penta.neighbors.push(pentagons[p])
-        pentagons[p].neighbors.push(penta)
         pentagons.push(penta)
+        pentagons[p].neighbors.push(penta)
+        const prev = pentagons[p - 1]
         const next = pentagons[p + 1]
-        if (next.hasTwoNeighbors) {
+        if (prev.hasTwoNeighbors && !prev.isLast && !prev.isFirst && prev.type === '1') {
+          penta.neighbors.push(prev)
+          prev.neighbors.push(penta)
+        } else if (next.hasTwoNeighbors && !next.isLast && !next.isFirst && next.type === '2') {
           penta.neighbors.push(next)
           next.neighbors.push(penta)
         }
         index++
-      }
-    })
-    flower(pentagons, maxLevel, level + 1)
+        if (type === '1' && isLast) {
+          const firstNeighbor = quadrantNeighbors[quadrant][type].firstNeighbor
+          const firstPoints = pentagons[p].addNeighbor(firstNeighbor)
+          const penta = new Pentagon(firstPoints, nextType, level + 1, index)
+          penta.neighbors.push(pentagons[p])
+          pentagons[p].neighbors.push(penta)
+          pentagons.push(penta)
+          const next = pentagons[p + 1]
+          if (next.hasTwoNeighbors) {
+            penta.neighbors.push(next)
+            next.neighbors.push(penta)
+          }
+          index++
+        }
+      })
+      flower(pentagons, maxLevel, level + 1)
+    }
   }
+
+  flower(pentagons, rings, 1)
+
+  const canvasConfig = normalizeCanvas(pentagons.map(p => p.points))
+
+  const polySVG = pentagons.map(p => {
+    return p.toSVG(new Coord(canvasConfig.offset.x, canvasConfig.offset.y))
+  }).reduce((acc, svg) => {
+    return `${acc}\n${svg}`
+  })
+
+  return `\
+  <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+  <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="0 0 ${canvasConfig.range} ${canvasConfig.range}" style="background:${colors.background}; margin: 50px;">
+    ${polySVG}
+  </svg>
+  `
 }
 
-flower(pentagons, rings, 1)
-
-const canvasConfig = normalizeCanvas(pentagons.map(p => p.points))
-
-const polySVG = pentagons.map(p => {
-  return p.toSVG(new Coord(canvasConfig.offset.x, canvasConfig.offset.y))
-}).reduce((acc, svg) => {
-  return `${acc}\n${svg}`
-})
-
-const canvas = `\
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="0 0 ${canvasConfig.range} ${canvasConfig.range}" style="background:${colors.background}; margin: 50px;">
-  ${polySVG}
-</svg>
-`
-
-fs.writeFile('pentaflower/pentaflower.svg', canvas, () => {
-  console.log('wrote to file pentaflower.svg')
-})
+module.exports = pentaflower

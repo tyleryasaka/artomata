@@ -4,7 +4,7 @@
   "description": "",
   "main": "pentaflower.js",
   "scripts": {
-    "svg": "node pentaflower.js",
+    "svg": "node svg.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tyler Yasaka",
