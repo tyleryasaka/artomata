@@ -8,7 +8,7 @@ const {
   rings
 } = require('./settings')
 
-function normalizeCanvas(polygons) {
+function normalizeCanvas (polygons) {
   const minXByPoly = polygons.map(points => {
     return Math.min(...(points.map(p => p.x)))
   })
@@ -36,19 +36,19 @@ function normalizeCanvas(polygons) {
   }
 }
 
-function translatePoints(points, translation) {
+function translatePoints (points, translation) {
   return points.map(point => {
     return new Coord(point.x + translation.x, point.y + translation.y)
   })
 }
 
-function rotatePoints(points, rotationDegrees) {
+function rotatePoints (points, rotationDegrees) {
   return points.map(point => {
     return rotate(point, rotationDegrees)
   })
 }
 
-function makePolygon(sides, rotationDegrees, translation) {
+function makePolygon (sides, rotationDegrees, translation) {
   let points = generateRegularPolygon(sides)
   if (rotationDegrees) {
     points = rotatePoints(points, rotationDegrees)
@@ -59,7 +59,7 @@ function makePolygon(sides, rotationDegrees, translation) {
   return points
 }
 
-function difference(a, b) {
+function difference (a, b) {
   return new Coord(a.x - b.x, a.y - b.y)
 }
 
@@ -103,7 +103,7 @@ const template_1 = makePolygon(5, null, new Coord(-0.5, -0.5))
 const template_2 = makePolygon(5, 36, new Coord(-0.5, -0.5))
 
 class Pentagon {
-  constructor(points, type, level, index) {
+  constructor (points, type, level, index) {
     this.points = points
     this.type = type
     this.level = level
@@ -119,7 +119,7 @@ class Pentagon {
     this.neighbors = []
   }
 
-  getColor() {
+  getColor () {
     // if (this.subQuad === 0) {
     //   return '#EE8434'
     // }
@@ -168,14 +168,14 @@ class Pentagon {
     return colors[this.type]
   }
 
-  addNeighbor(n) {
+  addNeighbor (n) {
     const t = neighborTransformations[n]
     const template = this.type === '1' ? template_2 : template_1
 
     return translatePoints(template, difference(this.points[t[0]], template[t[1]]))
   }
 
-  toSVG(offset) {
+  toSVG (offset) {
     return pointsToSVG(this.points, this.getColor(), new Coord(offset.x, offset.y))
   }
 }
@@ -195,21 +195,21 @@ const pentagons = [
   new Pentagon(poly_2, '2', 1, 4)
 ]
 
-function totalCountAtLevel(l) {
+function totalCountAtLevel (l) {
   if (l === 0) {
     return 1
   }
   return l * 5 + totalCountAtLevel(l - 1)
 }
 
-function flower(pentagons, maxLevel, level) {
+function flower (pentagons, maxLevel, level) {
   if (level < maxLevel) {
     const forLevelStart = totalCountAtLevel(level - 1)
     const forLevelEnd = totalCountAtLevel(level)
     const type = ((level % 2) === 0) ? '1' : '2'
     const nextType = (type === '1') ? '2' : '1'
     const iteration = []
-    for(var p = forLevelStart; p < forLevelEnd; p++) {
+    for (var p = forLevelStart; p < forLevelEnd; p++) {
       iteration.push(p)
     }
     let index = 0
