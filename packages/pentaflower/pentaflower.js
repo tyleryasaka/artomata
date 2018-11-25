@@ -114,6 +114,7 @@ class Pentagon {
     this.isLastInSub = (index % (level / 2)) === 0
     this.hasTwoNeighbors = (this.altType === 'b') || ((this.altType === 'a') && this.isLastInSub)
     this.neighbors = []
+    this.state = false
   }
 
   getColor () {
@@ -154,15 +155,11 @@ class Pentagon {
     //   return '#496DDB'
     // }
     const i = 39
-    if (this.hasTwoNeighbors) {
-      // return '#000'
+    if (this.state) {
+      return '#8F6F7E'
+    } else {
+      return '#5D68A0'
     }
-    if (this.index === i) {
-      return '#9381FF'
-    } else if (this.neighbors.filter(n => n.index === i).length) {
-      return '#F8F7FF'
-    }
-    return colors[this.type]
   }
 
   addNeighbor (n) {
