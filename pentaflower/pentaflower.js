@@ -156,7 +156,7 @@ class Pentagon {
     // if(this.isLastInSub) {
     //   return '#496DDB'
     // }
-    const i = 28
+    const i = 39
     if (this.hasTwoNeighbors) {
       // return '#000'
     }
