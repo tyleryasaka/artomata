@@ -119,7 +119,6 @@ class Pentagon {
   }
 
   getColor () {
-    const i = 39
     if (this.state) {
       return colors['1']
     } else {
@@ -199,7 +198,7 @@ class Pentaflower {
           penta.neighbors.push(pentagons[p])
           pentagons.push(penta)
           pentagons[p].neighbors.push(penta)
-          const prev = pentagons[((p - 1) + (level * 5)) % (level * 5)]
+          const prev = pentagons[p - 1]
           const next = pentagons[p + 1]
           if (prev.hasTwoNeighbors && !prev.isLast && !prev.isFirst && prev.type === '1') {
             penta.neighbors.push(prev)
@@ -216,10 +215,16 @@ class Pentaflower {
             penta.neighbors.push(pentagons[p])
             pentagons[p].neighbors.push(penta)
             pentagons.push(penta)
-            const next = pentagons[p + 1]
+            let next = pentagons[p + 1]
             if (next.hasTwoNeighbors) {
-              penta.neighbors.push(next)
-              next.neighbors.push(penta)
+              if (next.level === level) {
+                penta.neighbors.push(next)
+                next.neighbors.push(penta)
+              } else {
+                next = pentagons[forLevelStart]
+                penta.neighbors.push(next)
+                next.neighbors.push(penta)
+              }
             }
             index++
           }
