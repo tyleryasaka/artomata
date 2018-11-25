@@ -1,8 +1,8 @@
 const fs = require('fs')
-const { generateRegularPolygon } = require('../lib/polygon')
-const { pointsToSVG } = require('../lib/svg')
-const Coord = require('../lib/coord')
-const { rotate } = require('../lib/geometry')
+const { generateRegularPolygon } = require('../../lib/polygon')
+const { pointsToSVG } = require('../../lib/svg')
+const Coord = require('../../lib/coord')
+const { rotate } = require('../../lib/geometry')
 const {
   colors,
   rings
