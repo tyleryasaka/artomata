@@ -25,8 +25,6 @@ function normalizeCanvas (polygons) {
   const minY = Math.min(...minYByPoly)
   const maxX = Math.max(...maxXByPoly)
   const maxY = Math.max(...maxYByPoly)
-  const translateX = minX
-  const translateY = minY
   const rangeX = maxX - minX
   const rangeY = maxY - minY
   const range = Math.max(rangeX, rangeY)
@@ -99,8 +97,8 @@ const quadrantNeighbors = [
   }
 ]
 
-const template_1 = makePolygon(5, null, new Coord(-0.5, -0.5))
-const template_2 = makePolygon(5, 36, new Coord(-0.5, -0.5))
+const template1 = makePolygon(5, null, new Coord(-0.5, -0.5))
+const template2 = makePolygon(5, 36, new Coord(-0.5, -0.5))
 
 class Pentagon {
   constructor (points, type, level, index) {
@@ -170,7 +168,7 @@ class Pentagon {
 
   addNeighbor (n) {
     const t = neighborTransformations[n]
-    const template = this.type === '1' ? template_2 : template_1
+    const template = this.type === '1' ? template2 : template1
 
     return translatePoints(template, difference(this.points[t[0]], template[t[1]]))
   }
@@ -180,19 +178,19 @@ class Pentagon {
   }
 }
 
-const poly_1 = template_1
-const poly_2 = translatePoints(template_2, difference(poly_1[1], template_2[0]))
-const poly_3 = translatePoints(template_2, difference(poly_1[1], template_2[3]))
-const poly_4 = translatePoints(template_2, difference(poly_1[0], template_2[2]))
-const poly_5 = translatePoints(template_2, difference(poly_1[4], template_2[1]))
-const poly_6 = translatePoints(template_2, difference(poly_1[2], template_2[1]))
+const poly1 = template1
+const poly2 = translatePoints(template2, difference(poly1[1], template2[0]))
+const poly3 = translatePoints(template2, difference(poly1[1], template2[3]))
+const poly4 = translatePoints(template2, difference(poly1[0], template2[2]))
+const poly5 = translatePoints(template2, difference(poly1[4], template2[1]))
+const poly6 = translatePoints(template2, difference(poly1[2], template2[1]))
 const pentagons = [
-  new Pentagon(poly_1, '1', 0, 0),
-  new Pentagon(poly_3, '2', 1, 0),
-  new Pentagon(poly_4, '2', 1, 1),
-  new Pentagon(poly_5, '2', 1, 2),
-  new Pentagon(poly_6, '2', 1, 3),
-  new Pentagon(poly_2, '2', 1, 4)
+  new Pentagon(poly1, '1', 0, 0),
+  new Pentagon(poly3, '2', 1, 0),
+  new Pentagon(poly4, '2', 1, 1),
+  new Pentagon(poly5, '2', 1, 2),
+  new Pentagon(poly6, '2', 1, 3),
+  new Pentagon(poly2, '2', 1, 4)
 ]
 
 function totalCountAtLevel (l) {
@@ -249,7 +247,6 @@ function flower (pentagons, maxLevel, level) {
         penta.neighbors.push(pentagons[p])
         pentagons[p].neighbors.push(penta)
         pentagons.push(penta)
-        const prev = pentagons[p - 1]
         const next = pentagons[p + 1]
         if (next.hasTwoNeighbors) {
           penta.neighbors.push(next)
