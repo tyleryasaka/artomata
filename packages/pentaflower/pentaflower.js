@@ -262,6 +262,7 @@ function pentaflower() {
   flower(pentagons, rings, 1)
 
   const canvasConfig = normalizeCanvas(pentagons.map(p => p.points))
+  const fifth = canvasConfig.range / 5
 
   const polySVG = pentagons.map(p => {
     return p.toSVG(new Coord(canvasConfig.offset.x, canvasConfig.offset.y))
@@ -271,7 +272,7 @@ function pentaflower() {
 
   return `\
   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-  <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="0 0 ${canvasConfig.range} ${canvasConfig.range}" style="background:${colors.background}; margin: 50px;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="${fifth} ${fifth} ${canvasConfig.range - (2 * fifth)} ${canvasConfig.range - (2 * fifth)}" preserveAspectRatio="xMidYMid slice">
     ${polySVG}
   </svg>
   `
