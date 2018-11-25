@@ -1,16 +1,20 @@
 const Pentaflower = require('../pentaflower')
 
 const pentaflower = new Pentaflower()
+let play = true
 
 if (document.body) {
   document.body.onkeypress = function() {
-    pentaflower.progress()
-    document.getElementById('canvas').innerHTML = pentaflower.render()
+    play = !play
   }
   document.body.onload = function() {
-    pentaflower.setState(12)
-    pentaflower.setState(123)
-    pentaflower.setState(1234)
+    pentaflower.setState(0)
     document.getElementById('canvas').innerHTML = pentaflower.render()
+    setInterval(() => {
+      if (play) {
+        pentaflower.progress()
+        document.getElementById('canvas').innerHTML = pentaflower.render()
+      }
+    }, 1000)
   }
 }
