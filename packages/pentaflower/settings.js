@@ -4,5 +4,5 @@ module.exports = {
     '2': '#EE8434',
     background: '#C2B7FF'
   },
-  rings: 40
+  rings: 210
 }
