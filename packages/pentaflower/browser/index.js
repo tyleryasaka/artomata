@@ -2,7 +2,7 @@ const Coord = require('../../../lib/coord')
 const { colors } = require('../settings')
 const Pentaflower = require('../pentaflower')
 
-const INTERVAL = 250
+const INTERVAL = 293
 
 const pentaflower = new Pentaflower()
 let play = false
