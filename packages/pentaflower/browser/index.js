@@ -3,11 +3,11 @@ const { colors } = require('../settings')
 const Pentaflower = require('../pentaflower')
 
 const INTERVAL = 293
+const START_STATES = [0]
 
 const pentaflower = new Pentaflower()
 let play = false
 let timer
-let el
 let prevFills, fills
 
 const canvasConfig = pentaflower.normalizeCanvas()
@@ -22,7 +22,7 @@ const points = pentaflower.pentagons.map(p => {
   }, '')
 })
 
-function canvas(fills) {
+function canvas (fills) {
   return `\
     <div id="canvas">
       <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="${fifthX} ${fifthY} ${viewXEnd} ${viewYEnd}" preserveAspectRatio="xMidYMid slice" style="background: ${colors.background};">
@@ -34,7 +34,7 @@ function canvas(fills) {
   `
 }
 
-function update() {
+function update () {
   pentaflower.progress()
   fills = pentaflower.pentagons.map(p => p.getColor())
   const diffs = fills.map((fill, f) => {
@@ -50,8 +50,8 @@ function update() {
 }
 
 if (document.body) {
-  document.body.onkeypress = function() {
-    update()
+  document.body.onkeypress = function () {
+    // update()
     if (play) {
       play = false
       clearInterval(timer)
@@ -62,12 +62,10 @@ if (document.body) {
       }, INTERVAL)
     }
   }
-  document.body.onload = function() {
-    pentaflower.setState(1)
-    pentaflower.setState(3)
-    pentaflower.setState(25)
-    pentaflower.setState(84)
-    pentaflower.setState(840)
+  document.body.onload = function () {
+    START_STATES.forEach(s => {
+      pentaflower.setState(s)
+    })
     prevFills = pentaflower.pentagons.map(p => p.getColor())
     document.body.innerHTML = canvas(prevFills)
   }
