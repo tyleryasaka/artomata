@@ -1,37 +1,10 @@
 const { generateRegularPolygon } = require('../../lib/polygon')
-const { pointsToSVG } = require('../../lib/svg')
 const Coord = require('../../lib/coord')
 const { rotate } = require('../../lib/geometry')
 const {
   colors,
   rings
 } = require('./settings')
-
-function normalizeCanvas (polygons) {
-  const minXByPoly = polygons.map(points => {
-    return Math.min(...(points.map(p => p.x)))
-  })
-  const minYByPoly = polygons.map(points => {
-    return Math.min(...(points.map(p => p.y)))
-  })
-  const maxXByPoly = polygons.map(points => {
-    return Math.max(...(points.map(p => p.x)))
-  })
-  const maxYByPoly = polygons.map(points => {
-    return Math.max(...(points.map(p => p.y)))
-  })
-  const minX = Math.min(...minXByPoly)
-  const minY = Math.min(...minYByPoly)
-  const maxX = Math.max(...maxXByPoly)
-  const maxY = Math.max(...maxYByPoly)
-  const rangeX = maxX - minX
-  const rangeY = maxY - minY
-  return {
-    offset: new Coord(-minX, -minY),
-    rangeX,
-    rangeY
-  }
-}
 
 function translatePoints (points, translation) {
   return points.map(point => {
@@ -254,23 +227,31 @@ class Pentaflower {
     })
   }
 
-  render () {
-    const canvasConfig = normalizeCanvas(this.pentagons.map(p => p.points))
-    const fifthX = canvasConfig.rangeX / 5
-    const fifthY = canvasConfig.rangeY / 5
-
-    const polySVG = this.pentagons.map(p => {
-      return p.toSVG(new Coord(canvasConfig.offset.x, canvasConfig.offset.y))
-    }).reduce((acc, svg) => {
-      return `${acc}\n${svg}`
+  normalizeCanvas () {
+    const polygons = this.pentagons.map(p => p.points)
+    const minXByPoly = polygons.map(points => {
+      return Math.min(...(points.map(p => p.x)))
     })
-
-    return `\
-    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-    <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="${fifthX} ${fifthY} ${canvasConfig.rangeX - (2 * fifthX)} ${canvasConfig.rangeY - (2 * fifthY)}" preserveAspectRatio="xMidYMid slice" style="background: ${colors.background};">
-      ${polySVG}
-    </svg>
-    `
+    const minYByPoly = polygons.map(points => {
+      return Math.min(...(points.map(p => p.y)))
+    })
+    const maxXByPoly = polygons.map(points => {
+      return Math.max(...(points.map(p => p.x)))
+    })
+    const maxYByPoly = polygons.map(points => {
+      return Math.max(...(points.map(p => p.y)))
+    })
+    const minX = Math.min(...minXByPoly)
+    const minY = Math.min(...minYByPoly)
+    const maxX = Math.max(...maxXByPoly)
+    const maxY = Math.max(...maxYByPoly)
+    const rangeX = maxX - minX
+    const rangeY = maxY - minY
+    return {
+      offset: new Coord(-minX, -minY),
+      rangeX,
+      rangeY
+    }
   }
 }
 
