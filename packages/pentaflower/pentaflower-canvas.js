@@ -65,6 +65,14 @@ class PentaflowerCanvas {
     })
     this.prevFills = this.fills
   }
+
+  export (name = 'pentaflower') {
+    const dummyElement = document.createElement('a')
+    const file = new window.Blob([document.getElementById(this.canvasId).innerHTML], { type: 'text/plain' })
+    dummyElement.href = URL.createObjectURL(file)
+    dummyElement.download = `${name}.svg`
+    dummyElement.click()
+  }
 }
 
 module.exports = PentaflowerCanvas
