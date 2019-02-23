@@ -52,19 +52,18 @@ class PentaflowerCanvas {
     if (!this.hasRenderedCanvas) {
       this.renderInitialCanvas()
       this.hasRenderedCanvas = true
-    } else {
-      this.fills = this.pentaflower.pentagons.map(p => p.getState() ? this.colors[0] : this.colors[1])
-      const diffs = this.fills.map((fill, f) => {
-        if (fill !== this.prevFills[f]) {
-          return { index: f, fill }
-        }
-      })
-      const updates = diffs.filter(d => !!d)
-      updates.forEach(({ index, fill }) => {
-        document.getElementById(`${this.canvasId}-poly-${index}`).setAttribute('fill', fill)
-      })
-      this.prevFills = this.fills
     }
+    this.fills = this.pentaflower.pentagons.map(p => p.getState() ? this.colors[0] : this.colors[1])
+    const diffs = this.fills.map((fill, f) => {
+      if (fill !== this.prevFills[f]) {
+        return { index: f, fill }
+      }
+    })
+    const updates = diffs.filter(d => !!d)
+    updates.forEach(({ index, fill }) => {
+      document.getElementById(`${this.canvasId}-poly-${index}`).setAttribute('fill', fill)
+    })
+    this.prevFills = this.fills
   }
 }
 
