@@ -220,7 +220,7 @@ class Pentaflower {
       if (i === 6 && p.neighbors.length !== 3) {
         console.log(p.neighbors)
       }
-      p.nextState = (count !== 0 && count !== p.neighbors.length)
+      p.nextState = (count === 1)
     })
     this.pentagons.forEach(p => {
       p.state = p.nextState
