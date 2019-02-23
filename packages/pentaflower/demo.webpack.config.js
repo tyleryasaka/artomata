@@ -3,14 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = [{
   mode: 'development',
-  entry: './browser',
+  entry: './demo',
   output: {
-    filename: 'browser.js',
+    filename: 'demo.js',
     path: path.resolve(__dirname, 'dist/demo')
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'browser/index.html'
+      template: 'demo/index.html'
     })
   ]
 }]
