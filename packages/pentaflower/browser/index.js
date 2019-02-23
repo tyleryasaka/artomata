@@ -1,21 +1,18 @@
 const Coord = require('../../../lib/coord')
-const { colors } = require('../settings')
+const { rings, aliveStates, colors, startCells, interval } = require('../settings')
 const Pentaflower = require('../pentaflower')
 
-const INTERVAL = 293
-const START_STATES = [0]
-
-const pentaflower = new Pentaflower()
+const pentaflower = new Pentaflower({ rings, aliveStates })
 let play = false
 let timer
 let prevFills, fills
 
-const canvasConfig = pentaflower.normalizeCanvas()
-const fifthX = canvasConfig.rangeX / 5
-const fifthY = canvasConfig.rangeY / 5
-const offset = new Coord(canvasConfig.offset.x, canvasConfig.offset.y)
-const viewXEnd = canvasConfig.rangeX - (2 * fifthX)
-const viewYEnd = canvasConfig.rangeY - (2 * fifthY)
+const dimensions = pentaflower.getDimensions()
+const fifthX = dimensions.rangeX / 5
+const fifthY = dimensions.rangeY / 5
+const offset = new Coord(dimensions.offset.x, dimensions.offset.y)
+const viewXEnd = dimensions.rangeX - (2 * fifthX)
+const viewYEnd = dimensions.rangeY - (2 * fifthY)
 const points = pentaflower.pentagons.map(p => {
   return p.points.reduce((acc, point) => {
     return `${acc} ${point.x + offset.x},${point.y + offset.y}`
@@ -25,7 +22,7 @@ const points = pentaflower.pentagons.map(p => {
 function canvas (fills) {
   return `\
     <div id="canvas">
-      <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="${fifthX} ${fifthY} ${viewXEnd} ${viewYEnd}" preserveAspectRatio="xMidYMid slice" style="background: ${colors.background};">
+      <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="${fifthX} ${fifthY} ${viewXEnd} ${viewYEnd}" preserveAspectRatio="xMidYMid slice" style="background: ${colors[2]};">
         ${fills.map((fill, p) => {
           return `<polygon points="${points[p]}" fill="${fill}" id="poly-${p}" />`
         })}
@@ -36,7 +33,7 @@ function canvas (fills) {
 
 function update () {
   pentaflower.progress()
-  fills = pentaflower.pentagons.map(p => p.getColor())
+  fills = pentaflower.pentagons.map(p => p.getState() ? colors[0] : colors[1])
   const diffs = fills.map((fill, f) => {
     if (fill !== prevFills[f]) {
       return { index: f, fill }
@@ -59,14 +56,14 @@ if (document.body) {
       play = true
       timer = setInterval(() => {
         update()
-      }, INTERVAL)
+      }, interval)
     }
   }
   document.body.onload = function () {
-    START_STATES.forEach(s => {
+    startCells.forEach(s => {
       pentaflower.setState(s)
     })
-    prevFills = pentaflower.pentagons.map(p => p.getColor())
+    prevFills = pentaflower.pentagons.map(p => p.getState() ? colors[0] : colors[1])
     document.body.innerHTML = canvas(prevFills)
   }
 }

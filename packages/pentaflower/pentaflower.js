@@ -1,10 +1,6 @@
 const { generateRegularPolygon } = require('../../lib/polygon')
 const Coord = require('../../lib/coord')
 const { rotate } = require('../../lib/geometry')
-const {
-  colors,
-  rings
-} = require('./settings')
 
 function translatePoints (points, translation) {
   return points.map(point => {
@@ -91,12 +87,8 @@ class Pentagon {
     this.state = false
   }
 
-  getColor () {
-    if (this.state) {
-      return colors['1']
-    } else {
-      return colors['2']
-    }
+  getState () {
+    return this.state
   }
 
   addNeighbor (n) {
@@ -112,7 +104,8 @@ class Pentagon {
 }
 
 class Pentaflower {
-  constructor() {
+  constructor ({ rings = 50, aliveStates = [1] }) {
+    this.aliveStates = aliveStates
     const poly1 = template1
     const poly2 = translatePoints(template2, difference(poly1[1], template2[0]))
     const poly3 = translatePoints(template2, difference(poly1[1], template2[3]))
@@ -220,14 +213,14 @@ class Pentaflower {
       if (i === 6 && p.neighbors.length !== 3) {
         console.log(p.neighbors)
       }
-      p.nextState = (count === 1)
+      p.nextState = (this.aliveStates.includes(count))
     })
     this.pentagons.forEach(p => {
       p.state = p.nextState
     })
   }
 
-  normalizeCanvas () {
+  getDimensions () {
     const polygons = this.pentagons.map(p => p.points)
     const minXByPoly = polygons.map(points => {
       return Math.min(...(points.map(p => p.x)))

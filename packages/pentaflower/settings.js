@@ -1,8 +1,11 @@
 module.exports = {
-  colors: {
-    '1': '#FFFF00',
-    '2': '#6B6B37',
-    background: '#99992A'
-  },
-  rings: 50
+  colors: [
+    '#FFFF00',
+    '#6B6B37',
+    '#99992A'
+  ],
+  rings: 50,
+  aliveStates: [1],
+  startCells: [0],
+  interval: 250
 }
