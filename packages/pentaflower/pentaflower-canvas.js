@@ -69,3 +69,4 @@ class PentaflowerCanvas {
 }
 
 module.exports = PentaflowerCanvas
+global.PentaflowerCanvas = PentaflowerCanvas

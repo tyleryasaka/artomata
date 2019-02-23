@@ -4,9 +4,10 @@
   "description": "",
   "main": "pentaflower.js",
   "scripts": {
-    "start": "npx webpack-dev-server --open",
+    "start": "npx webpack-dev-server --config demo.webpack.config.js --open",
     "svg": "node svg.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx webpack --mode=production"
   },
   "author": "Tyler Yasaka",
   "license": "CC0-1.0",

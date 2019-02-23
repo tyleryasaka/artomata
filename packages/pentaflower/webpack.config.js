@@ -1,16 +1,17 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = [{
-  mode: 'development',
-  entry: './browser',
+  mode: 'production',
+  entry: './pentaflower',
   output: {
-    filename: 'browser.js',
+    filename: 'pentaflower.js',
     path: path.resolve(__dirname, 'dist')
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'browser/index.html'
-    })
-  ]
+  }
+}, {
+  mode: 'production',
+  entry: './pentaflower-canvas',
+  output: {
+    filename: 'pentaflower-canvas.js',
+    path: path.resolve(__dirname, 'dist')
+  }
 }]
