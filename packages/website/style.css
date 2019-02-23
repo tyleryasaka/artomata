@@ -1,0 +1,82 @@
+:root {
+  --exhibit-title-height: 200px;
+  --exhibit-title-height-mobile: 100px;
+  --font: 'Bungee Hairline', sans-serif;
+}
+
+body {
+  text-align: center;
+  margin: 0;
+}
+
+h1 {
+  font-family: var(--font);
+  font-weight: normal;
+  font-size: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+h2 {
+  font-family: var(--font);
+  font-weight: normal;
+}
+
+.exhibit-title {
+  font-family: var(--font);
+  font-size: 100px;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  width: 100%;
+  line-height: var(--exhibit-title-height);
+  vertical-align: middle;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  transition: 0.2s;
+}
+
+.exhibit-title:hover {
+  background: rgba(0, 0, 0, 0.5);
+  transition: 0.2s;
+}
+
+.art {
+  color: #888;
+}
+
+.exhibit-link {
+  text-decoration: none;
+  display: block;
+  height: var(--exhibit-title-height);
+  position: relative;
+  overflow: hidden;
+}
+
+#canvas svg {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+footer {
+  font-family: var(--font);
+  padding: 50px 0;
+}
+
+@media only screen and (max-width: 768px) {
+  .exhibit-title {
+    font-size: 30px;
+    line-height: var(--exhibit-title-height-mobile);
+  }
+
+  .exhibit-link {
+    height: var(--exhibit-title-height-mobile);
+  }
+}
