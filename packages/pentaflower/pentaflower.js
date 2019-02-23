@@ -249,3 +249,4 @@ class Pentaflower {
 }
 
 module.exports = Pentaflower
+global.Pentaflower = Pentaflower
