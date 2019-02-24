@@ -5,6 +5,6 @@ module.exports = [{
   entry: './pentaflower-canvas',
   output: {
     filename: 'pentaflower-canvas.js',
-    path: path.resolve(__dirname, '../website/dist')
+    path: path.resolve(__dirname, '../../website/_includes/js/dist')
   }
 }]
