@@ -4,9 +4,9 @@ const pentaflowerCanvas = new PentaflowerCanvas({
   rings: 50,
   aliveStates: [1],
   colors: [
-    '#FFFF00',
-    '#6B6B37',
-    '#99992A'
+    '#5383D6',
+    '#212C3F',
+    '#4D5E7C'
   ],
   startCells: [0],
   canvasId: 'pentaflower-canvas',
