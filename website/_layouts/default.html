@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html>
+{% include head.html %}
+
+<body>
+	{% include header.html %}
+	<main>
+		<article>
+			<h2>{{ page.title }}</h2>
+			{{ content }}
+		</article>
+		{% include footer.html %}
+	</main>
+  {% for js in page.jsarr %}
+    <script type="text/javascript">
+      {% include {{ js }} %}
+    </script>
+  {% endfor %}
+</body>
+
+</html>
