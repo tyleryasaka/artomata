@@ -51,7 +51,7 @@ if (document.body) {
   document.body.onload = function () {
     canvases.forEach((canvas, index) => {
       canvas.renderCanvas()
-      document.getElementById(`canvas-${index}`).childNodes[1].style.border = `10px solid ${canvasConfigs[index].colors[1]}`
+      document.getElementById(`canvas-${index}`).childNodes[1].style.border = `10px solid ${canvasConfigs[index].colors[2]}`
     })
   }
 }
