@@ -1,7 +1,8 @@
 const Coord = require('../../lib/coord')
 const Pentaflower = require('./pentaflower')
-const adjectives = require('./adjectives.json')
-const flowers = require('./flowers.json')
+const adverbs = require('./words/adverbs.json')
+const adjectives = require('./words/adjectives.json')
+const flowers = require('./words/flowers.json')
 
 // credit: https://stackoverflow.com/a/8831937
 function getHash (str) {
@@ -94,6 +95,13 @@ class PentaflowerCanvas {
   }
 
   getName () {
+    const adverbSeed = {
+      colors: this.colors,
+      rings: this.rings,
+      aliveStates: this.aliveStates,
+      startCells: this.startCells,
+      t: this.t
+    }
     const adjectiveSeed = this.colors
     const flowerSeed = {
       rings: this.rings,
@@ -101,13 +109,19 @@ class PentaflowerCanvas {
       startCells: this.startCells,
       t: this.t
     }
+    const adverbSeedStr = JSON.stringify(adverbSeed)
     const adjectiveSeedStr = JSON.stringify(adjectiveSeed)
     const flowerSeedStr = JSON.stringify(flowerSeed)
+    const adverbHash = getHash(adverbSeedStr)
     const adjectiveHash = getHash(adjectiveSeedStr)
     const flowerHash = getHash(flowerSeedStr)
+    const adverbIndex = Math.abs(adverbHash) % adverbs.length
     const adjectiveIndex = Math.abs(adjectiveHash) % adjectives.length
     const flowerIndex = Math.abs(flowerHash) % flowers.length
-    return `${adjectives[adjectiveIndex]} ${flowers[flowerIndex]}`
+    const adverb = adverbs[adverbIndex]
+    const adjective = adjectives[adjectiveIndex]
+    const flower = flowers[flowerIndex]
+    return `${adverb} ${adjective} ${flower}`
   }
 }
 
