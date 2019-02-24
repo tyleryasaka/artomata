@@ -1,9 +1,28 @@
 const Coord = require('../../lib/coord')
 const Pentaflower = require('./pentaflower')
+const adjectives = require('./adjectives.json')
+const flowers = require('./flowers.json')
+
+// credit: https://stackoverflow.com/a/8831937
+function getHash (str) {
+  var hash = 0
+  if (str.length === 0) {
+    return hash
+  }
+  for (var i = 0; i < str.length; i++) {
+    var char = str.charCodeAt(i)
+    hash = ((hash << 5) - hash) + char
+    hash = hash & hash // Convert to 32bit integer
+  }
+  return hash
+}
 
 class PentaflowerCanvas {
   constructor ({ rings, aliveStates, colors, startCells, startT = 0, canvasId }) {
+    this.rings = rings
+    this.aliveStates = aliveStates
     this.colors = colors
+    this.startCells = startCells
     this.pentaflower = new Pentaflower({ rings, aliveStates })
     startCells.forEach(s => {
       this.pentaflower.setState(s)
@@ -72,6 +91,23 @@ class PentaflowerCanvas {
     dummyElement.href = URL.createObjectURL(file)
     dummyElement.download = `${name}.svg`
     dummyElement.click()
+  }
+
+  getName () {
+    const adjectiveSeed = this.colors
+    const flowerSeed = {
+      rings: this.rings,
+      aliveStates: this.aliveStates,
+      startCells: this.startCells,
+      t: this.t
+    }
+    const adjectiveSeedStr = JSON.stringify(adjectiveSeed)
+    const flowerSeedStr = JSON.stringify(flowerSeed)
+    const adjectiveHash = getHash(adjectiveSeedStr)
+    const flowerHash = getHash(flowerSeedStr)
+    const adjectiveIndex = Math.abs(adjectiveHash) % adjectives.length
+    const flowerIndex = Math.abs(flowerHash) % flowers.length
+    return `${adjectives[adjectiveIndex]} ${flowers[flowerIndex]}`
   }
 }
 
