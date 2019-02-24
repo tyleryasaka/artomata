@@ -1,3 +1,8 @@
+.pentaflower-row {
+  display: flex;
+  justify-content: center;
+}
+
 .pentaflower-canvas {
   display: inline-block;
   padding: 30px;
@@ -8,7 +13,17 @@
 }
 
 .pentaflower-title {
-  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 260px;
+  height: 20px;
+  padding: 20px;
+  margin-top: 4px;
+}
+
+.pentaflower-title-text {
   font-family: var(--font);
   font-style: italic;
+  font-weight: 600;
 }

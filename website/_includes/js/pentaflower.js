@@ -53,10 +53,16 @@ if (document.body) {
       canvas.renderCanvas()
       const name = canvas.getName()
       const canvasEl = document.getElementById(`canvas-${index}`)
-      canvasEl.childNodes[1].style.border = `10px solid ${canvasConfigs[index].colors[2]}`
+      canvasEl.childNodes[1].style.border = `5px solid ${canvasConfigs[index].colors[2]}`
       const titleEl = document.createElement('div')
+      const titleTextEl = document.createElement('div')
       titleEl.className = 'pentaflower-title'
-      titleEl.innerHTML = name
+      titleTextEl.className = 'pentaflower-title-text'
+      titleTextEl.innerHTML = name
+      titleEl.style.background = canvasConfigs[index].colors[1]
+      titleEl.style.color = canvasConfigs[index].colors[0]
+      titleEl.style.border = `5px solid ${canvasConfigs[index].colors[2]}`
+      titleEl.appendChild(titleTextEl)
       canvasEl.appendChild(titleEl)
     })
   }
