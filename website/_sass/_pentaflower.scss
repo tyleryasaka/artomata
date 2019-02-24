@@ -1,5 +1,8 @@
-#canvas-1 svg {
-  width: 300px;
-  height: 300px;
-  border: 10px solid #6B6B37;
+.pentaflower-canvas {
+  display: inline-block;
+  padding: 30px;
+  svg {
+    width: 300px;
+    height: 300px;
+  }
 }
