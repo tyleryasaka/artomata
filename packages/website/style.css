@@ -17,6 +17,12 @@ h1 {
   padding-bottom: 50px;
 }
 
+h1 a {
+  text-decoration: none;
+  font-weight: normal;
+  color: #000;
+}
+
 h2 {
   font-family: var(--font);
   font-weight: normal;
@@ -55,7 +61,7 @@ h2 {
   overflow: hidden;
 }
 
-#canvas svg {
+#pentaflower-canvas svg {
   position: absolute;
   margin-left: auto;
   margin-right: auto;

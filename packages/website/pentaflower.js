@@ -9,7 +9,7 @@ const pentaflowerCanvas = new PentaflowerCanvas({
     '#99992A'
   ],
   startCells: [0],
-  canvasId: 'pentaflower-canvas',
+  canvasId: 'canvas-1',
   startT: 37
 })
 
