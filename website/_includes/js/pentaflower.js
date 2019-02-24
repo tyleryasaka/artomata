@@ -51,7 +51,13 @@ if (document.body) {
   document.body.onload = function () {
     canvases.forEach((canvas, index) => {
       canvas.renderCanvas()
-      document.getElementById(`canvas-${index}`).childNodes[1].style.border = `10px solid ${canvasConfigs[index].colors[2]}`
+      const name = canvas.getName()
+      const canvasEl = document.getElementById(`canvas-${index}`)
+      canvasEl.childNodes[1].style.border = `10px solid ${canvasConfigs[index].colors[2]}`
+      const titleEl = document.createElement('div')
+      titleEl.className = 'pentaflower-title'
+      titleEl.innerHTML = name
+      canvasEl.appendChild(titleEl)
     })
   }
 }
