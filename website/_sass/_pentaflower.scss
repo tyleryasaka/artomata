@@ -6,6 +6,7 @@
 .pentaflower-canvas {
   display: inline-block;
   padding: 30px;
+
   svg {
     width: 300px;
     height: 300px;
@@ -26,4 +27,10 @@
   font-family: var(--font);
   font-style: italic;
   font-weight: 600;
+}
+
+@media only screen and (max-width: 768px) {
+  .pentaflower-row {
+    display: block;
+  }
 }
