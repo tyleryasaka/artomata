@@ -22,7 +22,7 @@ class PentaflowerCanvas {
   constructor ({ rings, aliveStates, colors, startCells, startT = 0, canvasId }) {
     this.rings = rings
     this.aliveStates = aliveStates
-    this.colors = colors
+    this.colors = colors.map(c => c.toUpperCase())
     this.startCells = startCells
     this.pentaflower = new Pentaflower({ rings, aliveStates })
     startCells.forEach(s => {
@@ -88,7 +88,7 @@ class PentaflowerCanvas {
 
   export (name = 'pentaflower') {
     const dummyElement = document.createElement('a')
-    const file = new window.Blob([document.getElementById(this.canvasId).innerHTML], { type: 'text/plain' })
+    const file = new window.Blob([document.getElementById(this.canvasId).getElementsByTagName('svg')[0].outerHTML], { type: 'text/plain' })
     dummyElement.href = URL.createObjectURL(file)
     dummyElement.download = `${name}.svg`
     dummyElement.click()
