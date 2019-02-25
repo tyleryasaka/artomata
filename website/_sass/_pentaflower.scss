@@ -3,14 +3,20 @@
   justify-content: center;
 }
 
-.pentaflower-canvas {
+.pentaflower-canvas-container {
   display: inline-block;
   padding: 30px;
 
-  svg {
+  .pentaflower-canvas {
+    display: inline-block;
     width: 300px;
     height: 300px;
-    cursor: pointer;
+
+    svg {
+      width: 300px;
+      height: 300px;
+      cursor: pointer;
+    }
   }
 }
 
@@ -41,11 +47,16 @@
   justify-content: center;
 }
 
-.pentaflower-canvas.create {
-  svg {
-    cursor: default;
+.pentaflower-canvas-container.create {
+  .pentaflower-canvas {
     width: 400px;
     height: 400px;
+
+    svg {
+      cursor: default;
+      width: 400px;
+      height: 400px;
+    }
   }
 }
 

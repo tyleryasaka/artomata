@@ -79,7 +79,8 @@ function renderCanvas (config) {
   canvas.renderCanvas()
   const name = canvas.getName()
   const canvasEl = document.getElementById(config.canvasId)
-  canvasEl.childNodes[1].style.border = `5px solid ${config.colors[2]}`
+  const canvasContainerEl = document.getElementById(`canvas-create-container`)
+  canvasEl.style.border = `5px solid ${config.colors[2]}`
   const titleEl = document.createElement('div')
   const titleTextEl = document.createElement('div')
   titleEl.className = 'pentaflower-title create'
@@ -89,7 +90,7 @@ function renderCanvas (config) {
   titleEl.style.color = config.colors[0]
   titleEl.style.border = `5px solid ${config.colors[2]}`
   titleEl.appendChild(titleTextEl)
-  canvasEl.appendChild(titleEl)
+  canvasContainerEl.appendChild(titleEl)
 }
 
 if (document.body) {

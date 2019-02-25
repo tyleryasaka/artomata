@@ -54,8 +54,9 @@ if (document.body) {
       canvas.renderCanvas()
       const name = canvas.getName()
       const canvasEl = document.getElementById(`canvas-${index}`)
-      canvasEl.childNodes[1].style.border = `5px solid ${config.colors[2]}`
-      canvasEl.childNodes[1].onclick = function () {
+      const canvasContainerEl = document.getElementById(`canvas-${index}-container`)
+      canvasEl.style.border = `5px solid ${config.colors[2]}`
+      canvasEl.onclick = function () {
         window.location.href = `/pentaflower/create?rings=${config.rings}&t=${config.startT}&color1=${encodeURIComponent(config.colors[0])}&color2=${encodeURIComponent(config.colors[1])}&color3=${encodeURIComponent(config.colors[2])}`
       }
       const titleEl = document.createElement('div')
@@ -67,7 +68,7 @@ if (document.body) {
       titleEl.style.color = config.colors[0]
       titleEl.style.border = `5px solid ${config.colors[2]}`
       titleEl.appendChild(titleTextEl)
-      canvasEl.appendChild(titleEl)
+      canvasContainerEl.appendChild(titleEl)
     })
   }
 }
