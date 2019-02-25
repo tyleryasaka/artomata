@@ -1,4 +1,17 @@
-/* globals PentaflowerCanvas */
+/* globals PentaflowerCanvas, Pickr */
+
+const pickerComponentConfig = {
+  // Main components
+  preview: true,
+  hue: true,
+
+  // Input / output Options
+  interaction: {
+    save: true,
+    hex: true,
+    input: true
+  }
+}
 
 const urlParams = new URLSearchParams(window.location.search)
 const canvasConfig = {
@@ -32,18 +45,6 @@ function onChangeControl (ev) {
     if (newValue >= 0 && newValue <= 500) {
       canvasConfig.startT = newValue
     }
-  } else if (controlId === 'control-color-1') {
-    if (isValidColor(newValue)) {
-      canvasConfig.colors[0] = newValue
-    }
-  } else if (controlId === 'control-color-2') {
-    if (isValidColor(newValue)) {
-      canvasConfig.colors[1] = newValue
-    }
-  } else if (controlId === 'control-color-3') {
-    if (isValidColor(newValue)) {
-      canvasConfig.colors[2] = newValue
-    }
   }
   renderCanvas(canvasConfig)
 }
@@ -54,17 +55,41 @@ function downloadSVG () {
 
 document.getElementById('control-rings').onchange = onChangeControl
 document.getElementById('control-t').onchange = onChangeControl
-document.getElementById('control-color-1').onchange = onChangeControl
-document.getElementById('control-color-2').onchange = onChangeControl
-document.getElementById('control-color-3').onchange = onChangeControl
 document.getElementById('download').onclick = downloadSVG
+
+const pickr1 = Pickr.create({
+  el: '#control-color-1',
+  default: canvasConfig.colors[0],
+  components: pickerComponentConfig
+})
+
+const pickr2 = Pickr.create({
+  el: '#control-color-2',
+  default: canvasConfig.colors[1],
+  components: pickerComponentConfig
+})
+
+const pickr3 = Pickr.create({
+  el: '#control-color-3',
+  default: canvasConfig.colors[2],
+  components: pickerComponentConfig
+})
+
+function onSavePicker (args, colorIndex) {
+  const newValue = args[0].toHEX().toString()
+  if (isValidColor(newValue)) {
+    canvasConfig.colors[colorIndex] = newValue
+  }
+  renderCanvas(canvasConfig)
+}
+
+pickr1.on('save', (...args) => onSavePicker(args, 0))
+pickr2.on('save', (...args) => onSavePicker(args, 1))
+pickr3.on('save', (...args) => onSavePicker(args, 2))
 
 function updateControls (config) {
   document.getElementById('control-rings').value = config.rings
   document.getElementById('control-t').value = config.startT
-  document.getElementById('control-color-1').value = config.colors[0]
-  document.getElementById('control-color-2').value = config.colors[1]
-  document.getElementById('control-color-3').value = config.colors[2]
   urlParams.set('rings', config.rings)
   urlParams.set('t', config.startT)
   urlParams.set('color1', config.colors[0])
@@ -74,23 +99,34 @@ function updateControls (config) {
 }
 
 function renderCanvas (config) {
+  let titleEl = document.getElementById('canvas-title')
+  let titleTextEl = document.getElementById('canvas-title-text')
+  const created = Boolean(titleEl)
+  if (!created) {
+    titleEl = document.createElement('div')
+    titleTextEl = document.createElement('div')
+    titleEl.id = 'canvas-title'
+    titleTextEl.id = 'canvas-title-text'
+  }
+
   updateControls(config)
   canvas = new PentaflowerCanvas(config)
   canvas.renderCanvas()
   const name = canvas.getName()
   const canvasEl = document.getElementById(config.canvasId)
-  const canvasContainerEl = document.getElementById(`canvas-create-container`)
   canvasEl.style.border = `5px solid ${config.colors[2]}`
-  const titleEl = document.createElement('div')
-  const titleTextEl = document.createElement('div')
   titleEl.className = 'pentaflower-title create'
   titleTextEl.className = 'pentaflower-title-text'
   titleTextEl.innerHTML = name
   titleEl.style.background = config.colors[1]
   titleEl.style.color = config.colors[0]
   titleEl.style.border = `5px solid ${config.colors[2]}`
-  titleEl.appendChild(titleTextEl)
-  canvasContainerEl.appendChild(titleEl)
+
+  if (!created) {
+    const canvasContainerEl = document.getElementById(`canvas-create-container`)
+    titleEl.appendChild(titleTextEl)
+    canvasContainerEl.appendChild(titleEl)
+  }
 }
 
 if (document.body) {
