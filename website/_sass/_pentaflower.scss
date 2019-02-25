@@ -10,6 +10,7 @@
   svg {
     width: 300px;
     height: 300px;
+    cursor: pointer;
   }
 }
 
@@ -32,5 +33,49 @@
 @media only screen and (max-width: 768px) {
   .pentaflower-row {
     display: block;
+  }
+}
+
+.create-container {
+  display: flex;
+  justify-content: center;
+}
+
+.pentaflower-canvas.create {
+  svg {
+    cursor: default;
+    width: 400px;
+    height: 400px;
+  }
+}
+
+.pentaflower-title.create {
+  width: 360px;
+}
+
+.pentaflower-controls-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  width: 200px;
+  padding: 30px;
+
+  .spacer {
+    padding: 10px 0;
+  }
+
+  .form-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    input {
+      width: 100px;
+    }
+  }
+
+  .button#download {
+    width: 100%;
   }
 }

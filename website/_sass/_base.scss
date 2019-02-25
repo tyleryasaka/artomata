@@ -76,6 +76,15 @@ footer {
   padding: 50px 0;
 }
 
+.button {
+  font-family: var(--font);
+  background: #444;
+  color: #fff;
+  margin: 10px 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 768px) {
   .exhibit-title {
     font-size: 30px;

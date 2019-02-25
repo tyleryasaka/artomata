@@ -24,12 +24,12 @@ const canvasConfigs = [{
   rings: 50,
   aliveStates: [1],
   colors: [
-    '#FFFF00',
+    '#FFFF01',
     '#6B6B37',
     '#99992A'
   ],
   startCells: [0],
-  startT: 12
+  startT: 16
 }, {
   rings: 50,
   aliveStates: [1],
@@ -50,18 +50,22 @@ const canvases = canvasConfigs.map((config, index) => {
 if (document.body) {
   document.body.onload = function () {
     canvases.forEach((canvas, index) => {
+      const config = canvasConfigs[index]
       canvas.renderCanvas()
       const name = canvas.getName()
       const canvasEl = document.getElementById(`canvas-${index}`)
-      canvasEl.childNodes[1].style.border = `5px solid ${canvasConfigs[index].colors[2]}`
+      canvasEl.childNodes[1].style.border = `5px solid ${config.colors[2]}`
+      canvasEl.childNodes[1].onclick = function () {
+        window.location.href = `/pentaflower/create?rings=${config.rings}&t=${config.startT}&color1=${encodeURIComponent(config.colors[0])}&color2=${encodeURIComponent(config.colors[1])}&color3=${encodeURIComponent(config.colors[2])}`
+      }
       const titleEl = document.createElement('div')
       const titleTextEl = document.createElement('div')
       titleEl.className = 'pentaflower-title'
       titleTextEl.className = 'pentaflower-title-text'
       titleTextEl.innerHTML = name
-      titleEl.style.background = canvasConfigs[index].colors[1]
-      titleEl.style.color = canvasConfigs[index].colors[0]
-      titleEl.style.border = `5px solid ${canvasConfigs[index].colors[2]}`
+      titleEl.style.background = config.colors[1]
+      titleEl.style.color = config.colors[0]
+      titleEl.style.border = `5px solid ${config.colors[2]}`
       titleEl.appendChild(titleTextEl)
       canvasEl.appendChild(titleEl)
     })
