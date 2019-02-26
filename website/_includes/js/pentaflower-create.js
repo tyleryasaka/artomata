@@ -42,7 +42,7 @@ function onChangeControl (ev) {
     }
   } else if (controlId === 'control-t') {
     newValue = Number(newValue)
-    if (newValue >= 0 && newValue <= 500) {
+    if (newValue >= 0 && newValue <= 1000) {
       canvasConfig.startT = newValue
     }
   }
