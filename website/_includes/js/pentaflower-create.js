@@ -57,11 +57,14 @@ function downloadSVG () {
 }
 
 function onSavePicker (args, colorIndex) {
-  const newValue = args[0].toHEX().toString()
-  if (isValidColor(newValue)) {
-    canvasConfig.colors[colorIndex] = newValue
-  }
-  renderCanvas(canvasConfig)
+  document.getElementById('loading-spinner-container').className = ''
+  setTimeout(() => {
+    const newValue = args[0].toHEX().toString()
+    if (isValidColor(newValue)) {
+      canvasConfig.colors[colorIndex] = newValue
+    }
+    renderCanvas(canvasConfig)
+  }, 0)
 }
 
 function updateUrl (config) {
