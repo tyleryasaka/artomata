@@ -8,6 +8,9 @@
 	<main>
 		<article>
 			<h2>{{ page.title }}</h2>
+			{% if page.intro %}
+				<p class="intro">{{ page.intro }}</p>
+			{% endif %}
 			{{ content }}
 		</article>
 		{% include footer.html %}

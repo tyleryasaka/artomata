@@ -2,6 +2,7 @@
   --exhibit-title-height: 200px;
   --exhibit-title-height-mobile: 100px;
   --font: 'Bungee Hairline', sans-serif;
+  --secondaryFont: 'Open Sans', sans-serif;
 }
 
 body {
@@ -61,6 +62,14 @@ h2 {
   overflow: hidden;
 }
 
+.intro {
+  font-family: var(--secondaryFont);
+  font-weight: 300;
+  font-size: 14px;
+  max-width: 500px;
+  display: inline-block;
+}
+
 #pentaflower-canvas svg {
   position: absolute;
   margin-left: auto;
@@ -100,5 +109,9 @@ footer {
 
   .exhibit-link {
     height: var(--exhibit-title-height-mobile);
+  }
+
+  .intro {
+    padding: 0 20px;
   }
 }
