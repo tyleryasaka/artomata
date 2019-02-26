@@ -33,47 +33,28 @@ function isValidColor (hex) {
 }
 
 function onChangeControl (ev) {
-  let newValue = ev.target.value
-  const controlId = ev.target.id
-  if (controlId === 'control-rings') {
-    newValue = Number(newValue)
-    if (newValue >= 5 && newValue <= 100) {
-      canvasConfig.rings = newValue
+  document.getElementById('loading-spinner-container').className = ''
+  setTimeout(() => {
+    let newValue = ev.target.value
+    const controlId = ev.target.id
+    if (controlId === 'control-rings') {
+      newValue = Number(newValue)
+      if (newValue >= 5 && newValue <= 100) {
+        canvasConfig.rings = newValue
+      }
+    } else if (controlId === 'control-t') {
+      newValue = Number(newValue)
+      if (newValue >= 0 && newValue <= 1000) {
+        canvasConfig.startT = newValue
+      }
     }
-  } else if (controlId === 'control-t') {
-    newValue = Number(newValue)
-    if (newValue >= 0 && newValue <= 1000) {
-      canvasConfig.startT = newValue
-    }
-  }
-  renderCanvas(canvasConfig)
+    renderCanvas(canvasConfig)
+  }, 0)
 }
 
 function downloadSVG () {
   canvas.export(canvas.getName().replace(/\s/g, '_'))
 }
-
-document.getElementById('control-rings').onchange = onChangeControl
-document.getElementById('control-t').onchange = onChangeControl
-document.getElementById('download').onclick = downloadSVG
-
-const pickr1 = Pickr.create({
-  el: '#control-color-1',
-  default: canvasConfig.colors[0],
-  components: pickerComponentConfig
-})
-
-const pickr2 = Pickr.create({
-  el: '#control-color-2',
-  default: canvasConfig.colors[1],
-  components: pickerComponentConfig
-})
-
-const pickr3 = Pickr.create({
-  el: '#control-color-3',
-  default: canvasConfig.colors[2],
-  components: pickerComponentConfig
-})
 
 function onSavePicker (args, colorIndex) {
   const newValue = args[0].toHEX().toString()
@@ -83,13 +64,7 @@ function onSavePicker (args, colorIndex) {
   renderCanvas(canvasConfig)
 }
 
-pickr1.on('save', (...args) => onSavePicker(args, 0))
-pickr2.on('save', (...args) => onSavePicker(args, 1))
-pickr3.on('save', (...args) => onSavePicker(args, 2))
-
-function updateControls (config) {
-  document.getElementById('control-rings').value = config.rings
-  document.getElementById('control-t').value = config.startT
+function updateUrl (config) {
   urlParams.set('rings', config.rings)
   urlParams.set('t', config.startT)
   urlParams.set('color1', config.colors[0])
@@ -110,7 +85,7 @@ function renderCanvas (config) {
     titleTextEl.id = 'canvas-title-text'
   }
 
-  updateControls(config)
+  updateUrl(config)
   canvas = new PentaflowerCanvas(config)
   canvas.renderCanvas()
   const name = canvas.getName()
@@ -129,10 +104,39 @@ function renderCanvas (config) {
     titleEl.appendChild(titleTextEl)
     canvasContainerEl.appendChild(titleEl)
   }
+  document.getElementById('loading-spinner-container').className = 'hidden'
 }
 
 if (document.body) {
   document.body.onload = function () {
+    document.getElementById('control-rings').oninput = onChangeControl
+    document.getElementById('control-t').oninput = onChangeControl
+    document.getElementById('download').onclick = downloadSVG
+
+    const pickr1 = Pickr.create({
+      el: '#control-color-1',
+      default: canvasConfig.colors[0],
+      components: pickerComponentConfig
+    })
+
+    const pickr2 = Pickr.create({
+      el: '#control-color-2',
+      default: canvasConfig.colors[1],
+      components: pickerComponentConfig
+    })
+
+    const pickr3 = Pickr.create({
+      el: '#control-color-3',
+      default: canvasConfig.colors[2],
+      components: pickerComponentConfig
+    })
+
+    pickr1.on('save', (...args) => onSavePicker(args, 0))
+    pickr2.on('save', (...args) => onSavePicker(args, 1))
+    pickr3.on('save', (...args) => onSavePicker(args, 2))
+
+    document.getElementById('control-rings').value = canvasConfig.rings
+    document.getElementById('control-t').value = canvasConfig.startT
     renderCanvas(canvasConfig)
   }
 }

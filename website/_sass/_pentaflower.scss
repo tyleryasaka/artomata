@@ -48,6 +48,24 @@
 }
 
 .pentaflower-canvas-container.create {
+  position: relative;
+
+  #loading-spinner-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 30px;
+    left: 30px;
+    width: 410px;
+    height: 410px;
+    background: rgba(0, 0, 0, 0.5);
+
+    &.hidden {
+      display: none;
+    }
+  }
+
   .pentaflower-canvas {
     width: 400px;
     height: 400px;
