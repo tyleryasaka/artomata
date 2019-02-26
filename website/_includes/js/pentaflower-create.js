@@ -95,7 +95,8 @@ function updateControls (config) {
   urlParams.set('color1', config.colors[0])
   urlParams.set('color2', config.colors[1])
   urlParams.set('color3', config.colors[2])
-  document.getElementById('share-link').value = `${window.location.href.split('?')[0]}?${urlParams.toString()}`
+  const link = `${window.location.href.split('?')[0]}?${urlParams.toString()}`
+  window.history.replaceState(null, '', link)
 }
 
 function renderCanvas (config) {
@@ -113,6 +114,7 @@ function renderCanvas (config) {
   canvas = new PentaflowerCanvas(config)
   canvas.renderCanvas()
   const name = canvas.getName()
+  document.title = `Pentaflower: ${name}`
   const canvasEl = document.getElementById(config.canvasId)
   canvasEl.style.border = `5px solid ${config.colors[2]}`
   titleEl.className = 'pentaflower-title create'
