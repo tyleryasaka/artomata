@@ -77,11 +77,12 @@ footer {
 }
 
 .button {
+  text-decoration: none;
   font-family: var(--font);
   background: #444;
   color: #fff;
   margin: 10px 0;
-  padding: 10px;
+  padding: 10px 15px;
   transition: 0.2s;
   cursor: pointer;
 
