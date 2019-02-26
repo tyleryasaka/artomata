@@ -60,7 +60,8 @@ class PentaflowerCanvas {
 
   renderInitialCanvas () {
     document.getElementById(this.canvasId).innerHTML = `\
-      <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="${this.fifthX} ${this.fifthY} ${this.viewXEnd} ${this.viewYEnd}" preserveAspectRatio="xMidYMid slice" style="background: ${this.colors[2]};">
+      <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="${this.fifthX} ${this.fifthY} ${this.viewXEnd} ${this.viewYEnd}" preserveAspectRatio="xMidYMid slice">
+        <rect width="100%" height="100%" x="${this.fifthX}" y="${this.fifthY}" fill="${this.colors[2]}"/>
         ${this.fills.map((fill, p) => {
           return `<polygon points="${this.points[p]}" fill="${fill}" id="${this.canvasId}-poly-${p}" />`
         })}
