@@ -17,7 +17,7 @@ title: artomata
 email: contact@tyleryasaka.me
 description: art + cellular automata
   an experiment by tyler yasaka
-baseurl: artomata # the subpath of your site, e.g. /blog
+baseurl: /artomata # the subpath of your site, e.g. /blog
 url: https://tyleryasaka.github.io # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  tyleryasaka/artomata
 
