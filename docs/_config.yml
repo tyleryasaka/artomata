@@ -13,12 +13,12 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Your awesome title
+title: artomata
 email: contact@tyleryasaka.me
 description: art + cellular automata
   an experiment by tyler yasaka
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: artomata # the subpath of your site, e.g. /blog
+url: https://tyleryasaka.github.io # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  tyleryasaka/artomata
 
 # Build settings
