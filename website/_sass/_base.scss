@@ -2,7 +2,7 @@
   --exhibit-title-height: 200px;
   --exhibit-title-height-mobile: 100px;
   --font: 'Bungee Hairline', sans-serif;
-  --secondaryFont: 'Open Sans', sans-serif;
+  --secondaryFont: 'Rajdhani', sans-serif;
 }
 
 body {
@@ -15,11 +15,14 @@ h1 {
   font-weight: normal;
   font-size: 50px;
   padding-top: 50px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
+
+  a {
+    text-decoration: none;
+  }
 }
 
-h1 a {
-  text-decoration: none;
+a {
   font-weight: normal;
   color: #000;
 }
@@ -65,7 +68,6 @@ h2 {
 .intro {
   font-family: var(--secondaryFont);
   font-weight: 300;
-  font-size: 14px;
   max-width: 500px;
   display: inline-block;
 }
