@@ -11,31 +11,21 @@ const canvasConfigs = [{
   startCells: [0],
   startT: 990
 }, {
-  rings: 41,
+  rings: 100,
   aliveStates: [1],
   colors: [
-    '#F79256',
-    '#89441C',
-    '#C94900'
+    '#DA4167',
+    '#FFD166',
+    '#FFD166'
   ],
   startCells: [0],
-  startT: 21
-}, {
-  rings: 30,
-  aliveStates: [1],
-  colors: [
-    '#FFFF01',
-    '#6B6B37',
-    '#99992A'
-  ],
-  startCells: [0],
-  startT: 16
+  startT: 44
 }, {
   rings: 46,
   aliveStates: [1],
   colors: [
     '#FFD8DF',
-    '#604D51',
+    '#DB7F90',
     '#DB7F90'
   ],
   startCells: [0],
@@ -54,7 +44,7 @@ const canvasConfigs = [{
   rings: 33,
   aliveStates: [1],
   colors: [
-    '#72A98F',
+    '#9CE0C0',
     '#3D5A6C',
     '#3D5A6C'
   ],
@@ -71,15 +61,15 @@ const canvasConfigs = [{
   startCells: [0],
   startT: 391
 }, {
-  rings: 30,
+  rings: 67,
   aliveStates: [1],
   colors: [
-    '#FFB627',
-    '#E2711D',
-    '#FFB627'
+    '#F3CA40',
+    '#577590',
+    '#577590'
   ],
   startCells: [0],
-  startT: 47
+  startT: 31
 }, {
   rings: 40,
   aliveStates: [1],
@@ -101,25 +91,25 @@ const canvasConfigs = [{
   startCells: [0],
   startT: 108
 }, {
+  rings: 30,
+  aliveStates: [1],
+  colors: [
+    '#FFB627',
+    '#E2711D',
+    '#FFB627'
+  ],
+  startCells: [0],
+  startT: 47
+}, {
   rings: 44,
   aliveStates: [1],
   colors: [
     '#C2F8CB',
-    '#5603AD',
+    '#8367C7',
     '#8367C7'
   ],
   startCells: [0],
   startT: 108
-}, {
-  rings: 100,
-  aliveStates: [1],
-  colors: [
-    '#DA4167',
-    '#FFD166',
-    '#FFD166'
-  ],
-  startCells: [0],
-  startT: 44
 }, {
   rings: 74,
   aliveStates: [1],
@@ -130,16 +120,6 @@ const canvasConfigs = [{
   ],
   startCells: [0],
   startT: 36
-}, {
-  rings: 69,
-  aliveStates: [1],
-  colors: [
-    '#F3CA40',
-    '#577590',
-    '#577590'
-  ],
-  startCells: [0],
-  startT: 31
 }]
 
 const canvases = canvasConfigs.map((config, index) => {
