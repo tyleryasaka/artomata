@@ -18,6 +18,31 @@ function getHash (str) {
   return hash
 }
 
+// credit: https://stackoverflow.com/a/12300351
+function dataURItoBlob (dataURI) {
+  // convert base64 to raw binary data held in a string
+  // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+  const byteString = window.atob(dataURI.split(',')[1])
+
+  // separate out the mime component
+  const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+  // write the bytes of the string to an ArrayBuffer
+  var ab = new ArrayBuffer(byteString.length)
+
+  // create a view into the buffer
+  var ia = new Uint8Array(ab)
+
+  // set the bytes of the buffer to the correct values
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i)
+  }
+
+  // write the ArrayBuffer to a blob, and you're done
+  const blob = new window.Blob([ab], { type: mimeString })
+  return blob
+}
+
 class PentaflowerCanvas {
   constructor ({ rings, aliveStates, colors, startCells, startT = 0, canvasId }) {
     this.rings = rings
@@ -60,7 +85,7 @@ class PentaflowerCanvas {
 
   renderInitialCanvas () {
     document.getElementById(this.canvasId).innerHTML = `\
-      <svg xmlns="http://www.w3.org/2000/svg" width="700px" height="700px" viewBox="${this.fifthX} ${this.fifthY} ${this.viewXEnd} ${this.viewYEnd}" preserveAspectRatio="xMidYMid slice">
+      <svg xmlns="http://www.w3.org/2000/svg" width="5000px" height="5000px" viewBox="${this.fifthX} ${this.fifthY} ${this.viewXEnd} ${this.viewYEnd}" preserveAspectRatio="xMidYMid slice">
         <rect width="100%" height="100%" x="${this.fifthX}" y="${this.fifthY}" fill="${this.colors[2]}"/>
         ${this.fills.map((fill, p) => {
           return `<polygon points="${this.points[p]}" fill="${fill}" id="${this.canvasId}-poly-${p}" />`
@@ -87,12 +112,24 @@ class PentaflowerCanvas {
     this.prevFills = this.fills
   }
 
-  export (name = 'pentaflower') {
-    const dummyElement = document.createElement('a')
-    const file = new window.Blob([document.getElementById(this.canvasId).getElementsByTagName('svg')[0].outerHTML], { type: 'text/plain' })
-    dummyElement.href = URL.createObjectURL(file)
-    dummyElement.download = `${name}.svg`
-    dummyElement.click()
+  export (name = 'pentaflower', size = 5000) {
+    // https://stackoverflow.com/a/5438011
+    const svgElement = document.getElementById(this.canvasId).getElementsByTagName('svg')[0]
+    const canvasElement = document.createElement('canvas')
+    const context = canvasElement.getContext('2d')
+    const loader = new window.Image()
+    loader.width = canvasElement.width = size
+    loader.height = canvasElement.height = size
+    loader.onload = function () {
+      context.drawImage(loader, 0, 0, size, size)
+      const dummyElement = document.createElement('a')
+      const file = dataURItoBlob(canvasElement.toDataURL())
+      dummyElement.href = URL.createObjectURL(file)
+      dummyElement.download = `${name}.png`
+      dummyElement.click()
+    }
+    const svgAsXML = (new window.XMLSerializer()).serializeToString(svgElement)
+    loader.src = 'data:image/svg+xml,' + encodeURIComponent(svgAsXML)
   }
 
   getName () {
