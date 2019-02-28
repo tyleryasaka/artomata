@@ -95,6 +95,7 @@ function renderCanvas (config) {
   document.title = `Pentaflower: ${name}`
   const canvasEl = document.getElementById(config.canvasId)
   canvasEl.style.border = `5px solid ${config.colors[2]}`
+  canvasEl.style.background = config.colors[1]
   titleEl.className = 'pentaflower-title create'
   titleTextEl.className = 'pentaflower-title-text'
   titleTextEl.innerHTML = name
