@@ -7,14 +7,16 @@
   display: inline-block;
   padding: 30px;
 
-  .pentaflower-canvas {
-    display: inline-block;
-    width: 300px;
-    height: 300px;
-
-    img {
+  &.exhibit {
+    .pentaflower-canvas {
+      display: inline-block;
       width: 300px;
       height: 300px;
+
+      img {
+        width: 300px;
+        height: 300px;
+      }
     }
   }
 
@@ -111,7 +113,7 @@
     padding: 0 20px;
   }
 
-  .pentaflower-canvas-container, .pentaflower-canvas-container.create {
+  .pentaflower-canvas-container.exhibit, .pentaflower-canvas-container.create {
     width: 100%;
     padding: 0;
     display: block;
