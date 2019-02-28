@@ -9,7 +9,8 @@ const canvasConfigs = [{
     '#465775'
   ],
   startCells: [0],
-  startT: 990
+  startT: 990,
+  name: 'Vivaciously Determined Scabiosa'
 }, {
   rings: 100,
   aliveStates: [1],
@@ -19,7 +20,8 @@ const canvasConfigs = [{
     '#FFD166'
   ],
   startCells: [0],
-  startT: 44
+  startT: 44,
+  name: 'Unaccountably Yummy Scarlet Sage'
 }, {
   rings: 46,
   aliveStates: [1],
@@ -29,7 +31,8 @@ const canvasConfigs = [{
     '#DB7F90'
   ],
   startCells: [0],
-  startT: 288
+  startT: 288,
+  name: 'Quirkily Greasy Dusty Miller'
 }, {
   rings: 98,
   aliveStates: [1],
@@ -39,7 +42,8 @@ const canvasConfigs = [{
     '#4D5E7C'
   ],
   startCells: [0],
-  startT: 210
+  startT: 210,
+  name: 'Loyally Icy Maiden Pink'
 }, {
   rings: 33,
   aliveStates: [1],
@@ -49,7 +53,8 @@ const canvasConfigs = [{
     '#3D5A6C'
   ],
   startCells: [0],
-  startT: 995
+  startT: 995,
+  name: 'Lazily Ancient Geranium'
 }, {
   rings: 72,
   aliveStates: [1],
@@ -59,7 +64,8 @@ const canvasConfigs = [{
     '#902923'
   ],
   startCells: [0],
-  startT: 391
+  startT: 391,
+  name: 'Sweetly Lovely Sanvitalia'
 }, {
   rings: 67,
   aliveStates: [1],
@@ -69,7 +75,8 @@ const canvasConfigs = [{
     '#577590'
   ],
   startCells: [0],
-  startT: 31
+  startT: 31,
+  name: 'Defiantly Exuberant Artemisia'
 }, {
   rings: 40,
   aliveStates: [1],
@@ -79,7 +86,8 @@ const canvasConfigs = [{
     '#AFAAB9'
   ],
   startCells: [0],
-  startT: 201
+  startT: 201,
+  name: 'Monthly Jealous Corydalis'
 }, {
   rings: 78,
   aliveStates: [1],
@@ -89,7 +97,8 @@ const canvasConfigs = [{
     '#C0D461'
   ],
   startCells: [0],
-  startT: 108
+  startT: 108,
+  name: 'Too Sweet Sweet Woodruff'
 }, {
   rings: 30,
   aliveStates: [1],
@@ -99,7 +108,8 @@ const canvasConfigs = [{
     '#FFB627'
   ],
   startCells: [0],
-  startT: 47
+  startT: 47,
+  name: 'Kookily Resonant Fountain Grass'
 }, {
   rings: 44,
   aliveStates: [1],
@@ -109,7 +119,8 @@ const canvasConfigs = [{
     '#8367C7'
   ],
   startCells: [0],
-  startT: 108
+  startT: 108,
+  name: 'Weakly Blue Bergenia'
 }, {
   rings: 74,
   aliveStates: [1],
@@ -119,20 +130,15 @@ const canvasConfigs = [{
     '#A0EEE8'
   ],
   startCells: [0],
-  startT: 36
+  startT: 36,
+  name: 'Bravely Cool Moonflower'
 }]
-
-const canvases = canvasConfigs.map((config, index) => {
-  config.canvasId = `canvas-${index}`
-  return new PentaflowerCanvas(config)
-})
 
 if (document.body) {
   document.body.onload = function () {
     setTimeout(() => {
-      canvases.forEach((canvas, index) => {
-        const config = canvasConfigs[index]
-        const name = canvas.getName()
+      canvasConfigs.forEach((config, index) => {
+        const name = config.name
         const canvasEl = document.getElementById(`canvas-${index}`)
         const imgEl = canvasEl.getElementsByTagName('img')[0]
         const canvasContainerEl = document.getElementById(`canvas-${index}-container`)
