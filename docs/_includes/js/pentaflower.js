@@ -138,6 +138,7 @@ if (document.body) {
       const linkEl = canvasContainerEl.getElementsByTagName('a')[0]
       imgEl.src = `/assets/img/${name.replace(/\s/g, '_')}.png`
       canvasEl.style.border = `5px solid ${config.colors[2]}`
+      canvasEl.style.background = config.colors[2]
       linkEl.href = `/pentaflower/create?rings=${config.rings}&t=${config.startT}&color1=${encodeURIComponent(config.colors[0])}&color2=${encodeURIComponent(config.colors[1])}&color3=${encodeURIComponent(config.colors[2])}`
       const titleEl = document.createElement('div')
       const titleTextEl = document.createElement('div')
