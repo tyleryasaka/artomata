@@ -31,7 +31,7 @@
       top: 30px;
       left: 30px;
       width: 410px;
-      height: 484px;
+      height: 488px;
       background: rgba(0, 0, 0, 0.5);
 
       &.hidden {
@@ -59,13 +59,14 @@
   width: 260px;
   height: 20px;
   padding: 20px;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .pentaflower-title-text {
   font-family: var(--secondaryFont);
   font-style: italic;
   font-weight: 600;
+  font-size: 1.2em;
 }
 
 .create-container {
