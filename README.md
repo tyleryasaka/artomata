@@ -22,20 +22,18 @@ These are some examples of artwork generated with this code:
 
 All of the artomata code is open source and contained in this repo. There are several components.
 
-### pentaflower
+### [pentaflower](./packages/pentaflower)
 
-This is the javascript library that powers the pentaflower. I will clean this up and publish this to npm shortly, but for now you can get the source code as follows:
+This is the javascript library that powers the pentaflower. [Documentation here.](./packages/pentaflower)
 
-- `cd packages/pentaflower`
-- `npm install`
-- `npm run build`
+Note that the source code is under `packages/pentaflower`.
 
-The source code will be in `packages/pentaflower/dist`. There are 2 files: `pentaflower.js` (the bare-bones logic for the pentaflower) and `pentaflower-canvas.js` (a class that can render the pentaflower in a browser, export the file, etc).
+### [pentaflower-svg](./packages/pentaflower-svg)
 
-TODO:
-- publish to npm
-- document API
+This is an extension of the pentaflower class that renders the pentaflower in the broswer. [Documentation here.](./packages/pentaflower-svg)
 
-### website
+Note that the source code is under `packages/pentaflower-svg`.
+
+### [website](./docs)
 
 This is the source for the [artomata.io](http://www.artomata.io) website. It's a static site built with jekyll. The code is in the `docs` folder.

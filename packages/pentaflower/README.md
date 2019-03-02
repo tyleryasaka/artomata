@@ -1,4 +1,4 @@
-# Pentaflower
+# pentaflower
 
 ## Usage
 
