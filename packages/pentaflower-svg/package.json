@@ -2,7 +2,7 @@
   "name": "@artomata/pentaflower-svg",
   "version": "1.0.0",
   "description": "",
-  "browser": "pentaflower-canvas.js",
+  "main": "pentaflower-svg.js",
   "scripts": {
     "start": "npx webpack-dev-server --config demo.webpack.config.js --open",
     "test": "echo \"Error: no test specified\" && exit 1",
