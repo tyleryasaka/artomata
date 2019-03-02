@@ -1,5 +1,7 @@
 # artomata
 
+![artomata](examples/Brand_Screen.png)
+
 art + cellular automata
 
 an experiment
