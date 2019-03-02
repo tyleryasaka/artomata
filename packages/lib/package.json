@@ -1,6 +1,6 @@
 {
   "name": "@artomata/lib",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "author": "Tyler Yasaka",
   "license": "CC0-1.0",
@@ -9,7 +9,7 @@
     "url": "git+https://github.com/tyleryasaka/artomata.git"
   },
   "dependencies": {
-    "@artomata/pentaflower": "^1.0.0"
+    "@artomata/pentaflower": "^1.0.1"
   },
   "publishConfig": {
     "access": "public"

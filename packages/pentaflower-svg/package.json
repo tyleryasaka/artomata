@@ -1,6 +1,6 @@
 {
   "name": "@artomata/pentaflower-svg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "pentaflower-svg.js",
   "scripts": {
@@ -22,8 +22,8 @@
     "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
-    "@artomata/lib": "^1.0.0",
-    "@artomata/pentaflower": "^1.0.0"
+    "@artomata/lib": "^1.0.1",
+    "@artomata/pentaflower": "^1.0.1"
   },
   "publishConfig": {
     "access": "public"
