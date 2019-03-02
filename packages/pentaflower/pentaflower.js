@@ -100,7 +100,7 @@ class Pentagon {
 }
 
 class Pentaflower {
-  constructor ({ rings = 50, aliveStates = [1] }) {
+  constructor ({ rings = 50, aliveStates = [1] } = {}) {
     this.aliveStates = aliveStates
     const poly1 = template1
     const poly2 = translatePoints(template2, difference(poly1[1], template2[0]))
