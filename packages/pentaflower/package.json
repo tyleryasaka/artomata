@@ -1,6 +1,6 @@
 {
   "name": "@artomata/pentaflower",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "main": "pentaflower.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "@artomata/lib": "^0.0.0"
+    "@artomata/lib": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"
