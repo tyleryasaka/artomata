@@ -4,6 +4,10 @@
   "description": "",
   "author": "Tyler Yasaka",
   "license": "CC0-1.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tyleryasaka/artomata.git"
+  },
   "dependencies": {
     "@artomata/pentaflower": "^0.0.0"
   }

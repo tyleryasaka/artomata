@@ -9,6 +9,10 @@
     "build": "npx webpack --mode=production",
     "build:website": "npx webpack --config website.webpack.config.js --mode=production"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tyleryasaka/artomata.git"
+  },
   "author": "Tyler Yasaka",
   "license": "CC0-1.0",
   "devDependencies": {
