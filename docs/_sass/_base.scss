@@ -89,6 +89,20 @@ h2 {
 footer {
   font-family: var(--font);
   padding: 50px 0;
+
+  .social-icons {
+    margin-top: 20px;
+
+    a {
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
 }
 
 .button {
