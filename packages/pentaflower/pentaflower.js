@@ -205,9 +205,6 @@ class Pentaflower {
   progress () {
     this.pentagons.forEach((p, i) => {
       const count = p.neighbors.filter(n => n.state).length
-      if (i === 6 && p.neighbors.length !== 3) {
-        console.log(p.neighbors)
-      }
       p.nextState = (this.aliveStates.includes(count))
     })
     this.pentagons.forEach(p => {
