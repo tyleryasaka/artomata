@@ -22,7 +22,7 @@ const canvasConfig = {
     urlParams.get('color3')
   ],
   startT: Number(urlParams.get('t')),
-  canvasId: 'canvas-create'
+  containerId: 'canvas-create'
 }
 let canvas
 
@@ -51,7 +51,7 @@ function onChangeControl (ev) {
 }
 
 function downloadSVG () {
-  canvas.export(canvas.getName().replace(/\s/g, '_'))
+  canvas.export()
 }
 
 function onSavePicker (args, colorIndex) {
@@ -88,10 +88,9 @@ function renderCanvas (config) {
 
   updateUrl(config)
   canvas = new PentaflowerSVG(config)
-  canvas.render()
   const name = canvas.getName()
   document.title = `Pentaflower: ${name}`
-  const canvasEl = document.getElementById(config.canvasId)
+  const canvasEl = document.getElementById(config.containerId)
   canvasEl.style.border = `5px solid ${config.colors[2]}`
   canvasEl.style.background = config.colors[1]
   titleEl.className = 'pentaflower-title create'

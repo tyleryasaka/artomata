@@ -44,7 +44,7 @@ function dataURItoBlob (dataURI) {
 }
 
 class PentaflowerSVG {
-  constructor ({ rings, aliveStates = [1], colors, startCells = [0], startT = 0, canvasId }) {
+  constructor ({ rings, aliveStates = [1], colors, startCells = [0], startT = 0, containerId }) {
     this.rings = rings
     this.aliveStates = aliveStates
     this.colors = colors.map(c => c.toUpperCase())
@@ -56,7 +56,7 @@ class PentaflowerSVG {
     this.prevFills = null
     this.fills = this.pentaflower.pentagons.map(p => p.getState() ? this.colors[0] : this.colors[1])
     this.t = 0
-    this.canvasId = canvasId
+    this.containerId = containerId
     this.hasRenderedCanvas = false
 
     const dimensions = this.pentaflower.getDimensions()
@@ -75,6 +75,7 @@ class PentaflowerSVG {
       this.pentaflower.progress()
       this.t++
     }
+    this.render()
   }
 
   nextT () {
@@ -84,11 +85,11 @@ class PentaflowerSVG {
   }
 
   renderInitial () {
-    document.getElementById(this.canvasId).innerHTML = `\
+    document.getElementById(this.containerId).innerHTML = `\
       <svg xmlns="http://www.w3.org/2000/svg" width="5000px" height="5000px" viewBox="${this.fifthX} ${this.fifthY} ${this.viewXEnd} ${this.viewYEnd}" preserveAspectRatio="xMidYMid slice">
         <rect width="100%" height="100%" x="${this.fifthX}" y="${this.fifthY}" fill="${this.colors[2]}"/>
         ${this.fills.map((fill, p) => {
-          return `<polygon points="${this.points[p]}" fill="${fill}" id="${this.canvasId}-poly-${p}" />`
+          return `<polygon points="${this.points[p]}" fill="${fill}" id="${this.containerId}-poly-${p}" />`
         })}
       </svg>
     `
@@ -107,14 +108,15 @@ class PentaflowerSVG {
     })
     const updates = diffs.filter(d => !!d)
     updates.forEach(({ index, fill }) => {
-      document.getElementById(`${this.canvasId}-poly-${index}`).setAttribute('fill', fill)
+      document.getElementById(`${this.containerId}-poly-${index}`).setAttribute('fill', fill)
     })
     this.prevFills = this.fills
   }
 
-  export (name = 'pentaflower', size = 5000) {
+  export (name, size = 5000) {
+    name = name || this.getName().replace(/\s/g, '_')
     // https://stackoverflow.com/a/5438011
-    const svgElement = document.getElementById(this.canvasId).getElementsByTagName('svg')[0]
+    const svgElement = document.getElementById(this.containerId).getElementsByTagName('svg')[0]
     const canvasElement = document.createElement('canvas')
     const context = canvasElement.getContext('2d')
     const loader = new window.Image()
