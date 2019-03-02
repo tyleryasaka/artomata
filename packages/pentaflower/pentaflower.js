@@ -97,10 +97,6 @@ class Pentagon {
 
     return translatePoints(template, difference(this.points[t[0]], template[t[1]]))
   }
-
-  toSVG (offset) {
-    return pointsToSVG(this.points, this.getColor(), new Coord(offset.x, offset.y))
-  }
 }
 
 class Pentaflower {
@@ -202,12 +198,11 @@ class Pentaflower {
     this.pentagons = pentagons
   }
 
-  setState(index) {
+  setState (index) {
     this.pentagons[index].state = true
   }
 
-  progress() {
-    const pentagons = this.pentagons
+  progress () {
     this.pentagons.forEach((p, i) => {
       const count = p.neighbors.filter(n => n.state).length
       if (i === 6 && p.neighbors.length !== 3) {
