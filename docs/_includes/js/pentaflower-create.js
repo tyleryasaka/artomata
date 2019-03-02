@@ -1,4 +1,4 @@
-/* globals PentaflowerCanvas, Pickr */
+/* globals PentaflowerSVG, Pickr */
 
 const pickerComponentConfig = {
   // Main components
@@ -89,8 +89,8 @@ function renderCanvas (config) {
   }
 
   updateUrl(config)
-  canvas = new PentaflowerCanvas(config)
-  canvas.renderCanvas()
+  canvas = new PentaflowerSVG(config)
+  canvas.render()
   const name = canvas.getName()
   document.title = `Pentaflower: ${name}`
   const canvasEl = document.getElementById(config.canvasId)

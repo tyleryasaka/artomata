@@ -1,5 +1,3 @@
-/* globals PentaflowerCanvas */
-
 const canvasConfigs = [{
   rings: 48,
   aliveStates: [1],

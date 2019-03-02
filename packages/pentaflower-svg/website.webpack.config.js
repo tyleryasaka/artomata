@@ -2,9 +2,9 @@ const path = require('path')
 
 module.exports = [{
   mode: 'production',
-  entry: './pentaflower-canvas',
+  entry: './pentaflower-svg',
   output: {
-    filename: 'pentaflower-canvas.js',
+    filename: 'pentaflower-svg.js',
     path: path.resolve(__dirname, '../../docs/_includes/js/dist')
   }
 }]

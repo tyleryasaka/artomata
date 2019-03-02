@@ -1,5 +1,5 @@
-const Coord = require('../../lib/coord')
-const Pentaflower = require('./pentaflower')
+const Coord = require('@artomata/lib/coord')
+const Pentaflower = require('@artomata/pentaflower')
 const adverbs = require('./words/adverbs.json')
 const adjectives = require('./words/adjectives.json')
 const flowers = require('./words/flowers.json')
@@ -43,7 +43,7 @@ function dataURItoBlob (dataURI) {
   return blob
 }
 
-class PentaflowerCanvas {
+class PentaflowerSVG {
   constructor ({ rings, aliveStates, colors, startCells, startT = 0, canvasId }) {
     this.rings = rings
     this.aliveStates = aliveStates
@@ -80,10 +80,10 @@ class PentaflowerCanvas {
   nextT () {
     this.pentaflower.progress()
     this.t++
-    this.renderCanvas()
+    this.render()
   }
 
-  renderInitialCanvas () {
+  renderInitial () {
     document.getElementById(this.canvasId).innerHTML = `\
       <svg xmlns="http://www.w3.org/2000/svg" width="5000px" height="5000px" viewBox="${this.fifthX} ${this.fifthY} ${this.viewXEnd} ${this.viewYEnd}" preserveAspectRatio="xMidYMid slice">
         <rect width="100%" height="100%" x="${this.fifthX}" y="${this.fifthY}" fill="${this.colors[2]}"/>
@@ -94,9 +94,9 @@ class PentaflowerCanvas {
     `
   }
 
-  renderCanvas () {
+  render () {
     if (!this.hasRenderedCanvas) {
-      this.renderInitialCanvas()
+      this.renderInitial()
       this.hasRenderedCanvas = true
     }
     this.fills = this.pentaflower.pentagons.map(p => p.getState() ? this.colors[0] : this.colors[1])
@@ -163,5 +163,5 @@ class PentaflowerCanvas {
   }
 }
 
-module.exports = PentaflowerCanvas
-global.PentaflowerCanvas = PentaflowerCanvas
+module.exports = PentaflowerSVG
+global.PentaflowerSVG = PentaflowerSVG

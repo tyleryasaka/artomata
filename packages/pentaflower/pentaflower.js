@@ -1,6 +1,6 @@
-const { generateRegularPolygon } = require('../../lib/polygon')
-const Coord = require('../../lib/coord')
-const { rotate } = require('../../lib/geometry')
+const { generateRegularPolygon } = require('@artomata/lib/polygon')
+const Coord = require('@artomata/lib/coord')
+const { rotate } = require('@artomata/lib/geometry')
 
 function translatePoints (points, translation) {
   return points.map(point => {

@@ -1,12 +1,12 @@
 const { rings, aliveStates, colors, startCells, interval } = require('../settings')
-const PentaflowerCanvas = require('../pentaflower-canvas')
+const PentaflowerSVG = require('../pentaflower-svg')
 
-const pentaflowerCanvas = new PentaflowerCanvas({ rings, aliveStates, colors, startCells, canvasId: 'canvas' })
+const pentaflowerSVG = new PentaflowerSVG({ rings, aliveStates, colors, startCells, canvasId: 'canvas' })
 let play = false
 let timer
 
 function update () {
-  pentaflowerCanvas.nextT()
+  pentaflowerSVG.nextT()
 }
 
 if (document.body) {
@@ -23,6 +23,6 @@ if (document.body) {
     }
   }
   document.body.onload = function () {
-    pentaflowerCanvas.renderCanvas()
+    pentaflowerSVG.render()
   }
 }

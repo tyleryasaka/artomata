@@ -1,0 +1,10 @@
+{
+  "name": "@artomata/lib",
+  "version": "0.0.0",
+  "description": "",
+  "author": "Tyler Yasaka",
+  "license": "CC0-1.0",
+  "dependencies": {
+    "@artomata/pentaflower": "^0.0.0"
+  }
+}

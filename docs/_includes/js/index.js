@@ -1,6 +1,6 @@
-/* globals PentaflowerCanvas */
+/* globals PentaflowerSVG */
 
-const pentaflowerCanvas = new PentaflowerCanvas({
+const pentaflowerCanvas = new PentaflowerSVG({
   rings: 50,
   aliveStates: [1],
   colors: [
@@ -15,6 +15,6 @@ const pentaflowerCanvas = new PentaflowerCanvas({
 
 if (document.body) {
   document.body.onload = function () {
-    pentaflowerCanvas.renderCanvas()
+    pentaflowerCanvas.render()
   }
 }
