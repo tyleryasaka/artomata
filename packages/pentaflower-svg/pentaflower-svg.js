@@ -44,7 +44,7 @@ function dataURItoBlob (dataURI) {
 }
 
 class PentaflowerSVG {
-  constructor ({ rings, aliveStates, colors, startCells, startT = 0, canvasId }) {
+  constructor ({ rings, aliveStates = [1], colors, startCells = [0], startT = 0, canvasId }) {
     this.rings = rings
     this.aliveStates = aliveStates
     this.colors = colors.map(c => c.toUpperCase())

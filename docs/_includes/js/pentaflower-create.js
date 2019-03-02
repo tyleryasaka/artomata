@@ -16,13 +16,11 @@ const pickerComponentConfig = {
 const urlParams = new URLSearchParams(window.location.search)
 const canvasConfig = {
   rings: Number(urlParams.get('rings')),
-  aliveStates: [1],
   colors: [
     urlParams.get('color1'),
     urlParams.get('color2'),
     urlParams.get('color3')
   ],
-  startCells: [0],
   startT: Number(urlParams.get('t')),
   canvasId: 'canvas-create'
 }
