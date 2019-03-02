@@ -117,11 +117,13 @@ if (document.body) {
         const imgEl = canvasEl.getElementsByTagName('img')[0]
         const canvasContainerEl = document.getElementById(`canvas-${index}-container`)
         const linkEl = canvasContainerEl.getElementsByTagName('a')[0]
+        const href = `/pentaflower/create?rings=${config.rings}&t=${config.startT}&color1=${encodeURIComponent(config.colors[0])}&color2=${encodeURIComponent(config.colors[1])}&color3=${encodeURIComponent(config.colors[2])}`
         imgEl.src = `/assets/img/${name.replace(/\s/g, '_')}.png`
         canvasEl.style.border = `5px solid ${config.colors[2]}`
         canvasEl.style.background = config.colors[2]
-        linkEl.href = `/pentaflower/create?rings=${config.rings}&t=${config.startT}&color1=${encodeURIComponent(config.colors[0])}&color2=${encodeURIComponent(config.colors[1])}&color3=${encodeURIComponent(config.colors[2])}`
-        const titleEl = document.createElement('div')
+        linkEl.href = href
+        const titleEl = document.createElement('a')
+        titleEl.href = href
         const titleTextEl = document.createElement('div')
         titleEl.className = 'pentaflower-title'
         titleTextEl.className = 'pentaflower-title-text'
