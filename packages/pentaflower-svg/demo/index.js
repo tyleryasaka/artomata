@@ -6,7 +6,7 @@ let play = false
 let timer
 
 function update () {
-  pentaflowerSVG.nextT()
+  pentaflowerSVG.nextGeneration()
 }
 
 if (document.body) {

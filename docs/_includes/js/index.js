@@ -10,7 +10,7 @@ if (document.body) {
         '#4D5E7C'
       ],
       containerId: 'pentaflower-canvas',
-      startT: 37
+      startGeneration: 37
     })
   }
 }

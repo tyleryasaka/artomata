@@ -21,7 +21,7 @@ const canvasConfig = {
     urlParams.get('color2'),
     urlParams.get('color3')
   ],
-  startT: Number(urlParams.get('t')),
+  startGeneration: Number(urlParams.get('generation')),
   containerId: 'canvas-create'
 }
 let canvas
@@ -43,7 +43,7 @@ function onChangeControl (ev) {
     } else if (controlId === 'control-t') {
       newValue = Number(newValue)
       if (newValue >= 0 && newValue <= 1000) {
-        canvasConfig.startT = newValue
+        canvasConfig.startGeneration = newValue
       }
     }
     renderCanvas(canvasConfig)
@@ -67,7 +67,7 @@ function onSavePicker (args, colorIndex) {
 
 function updateUrl (config) {
   urlParams.set('rings', config.rings)
-  urlParams.set('t', config.startT)
+  urlParams.set('t', config.startGeneration)
   urlParams.set('color1', config.colors[0])
   urlParams.set('color2', config.colors[1])
   urlParams.set('color3', config.colors[2])
@@ -137,7 +137,7 @@ if (document.body) {
     pickr3.on('save', (...args) => onSavePicker(args, 2))
 
     document.getElementById('control-rings').value = canvasConfig.rings
-    document.getElementById('control-t').value = canvasConfig.startT
+    document.getElementById('control-t').value = canvasConfig.startGeneration
     renderCanvas(canvasConfig)
   }
 }

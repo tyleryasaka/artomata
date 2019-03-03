@@ -12,7 +12,7 @@
 const PentaflowerSVG = window.PentaflowerSVG
 const myFlower = new PentaflowerSVG({
   rings: 50,
-  startT: 37, // initial value of `t`
+  startGeneration: 37, // start at a specific generation
   colors: [
     '#5383D6',
     '#212C3F',
@@ -26,12 +26,12 @@ This generates an svg element within the element specified by the `containerId` 
 
 ## Pentaflower API
 
-### nextT
+### nextGeneration
 
-Progresses the pentaflower to the next `t`. This automatically re-renders the svg.
+Progresses the pentaflower to the next generation. This automatically re-renders the svg.
 
 ```js
-myFlower.nextT()
+myFlower.nextGeneration()
 ```
 
 ### export

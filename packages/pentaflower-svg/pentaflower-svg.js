@@ -44,7 +44,7 @@ function dataURItoBlob (dataURI) {
 }
 
 class PentaflowerSVG {
-  constructor ({ rings, aliveStates = [1], colors, startCells = [0], startT = 0, containerId }) {
+  constructor ({ rings, aliveStates = [1], colors, startCells = [0], startGeneration = 0, containerId }) {
     this.rings = rings
     this.aliveStates = aliveStates
     this.colors = colors.map(c => c.toUpperCase())
@@ -71,14 +71,14 @@ class PentaflowerSVG {
       }, '')
     })
     this.prevFills = this.pentaflower.pentagons.map(p => p.getState() ? colors[0] : colors[1])
-    for (let t = 0; t < startT; t++) {
+    for (let t = 0; t < startGeneration; t++) {
       this.pentaflower.progress()
       this.t++
     }
     this.render()
   }
 
-  nextT () {
+  nextGeneration () {
     this.pentaflower.progress()
     this.t++
     this.render()

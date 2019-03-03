@@ -5,7 +5,7 @@ const canvasConfigs = [{
     '#465775',
     '#465775'
   ],
-  startT: 990,
+  startGeneration: 990,
   name: 'Vivaciously Determined Scabiosa'
 }, {
   rings: 100,
@@ -14,7 +14,7 @@ const canvasConfigs = [{
     '#FFD166',
     '#FFD166'
   ],
-  startT: 44,
+  startGeneration: 44,
   name: 'Unaccountably Yummy Scarlet Sage'
 }, {
   rings: 46,
@@ -23,7 +23,7 @@ const canvasConfigs = [{
     '#DB7F90',
     '#DB7F90'
   ],
-  startT: 288,
+  startGeneration: 288,
   name: 'Quirkily Greasy Dusty Miller'
 }, {
   rings: 98,
@@ -32,7 +32,7 @@ const canvasConfigs = [{
     '#212C3F',
     '#4D5E7C'
   ],
-  startT: 210,
+  startGeneration: 210,
   name: 'Loyally Icy Maiden Pink'
 }, {
   rings: 33,
@@ -41,7 +41,7 @@ const canvasConfigs = [{
     '#3D5A6C',
     '#3D5A6C'
   ],
-  startT: 995,
+  startGeneration: 995,
   name: 'Lazily Ancient Geranium'
 }, {
   rings: 72,
@@ -50,7 +50,7 @@ const canvasConfigs = [{
     '#902923',
     '#902923'
   ],
-  startT: 391,
+  startGeneration: 391,
   name: 'Sweetly Lovely Sanvitalia'
 }, {
   rings: 67,
@@ -59,7 +59,7 @@ const canvasConfigs = [{
     '#577590',
     '#577590'
   ],
-  startT: 31,
+  startGeneration: 31,
   name: 'Defiantly Exuberant Artemisia'
 }, {
   rings: 40,
@@ -68,7 +68,7 @@ const canvasConfigs = [{
     '#B48291',
     '#AFAAB9'
   ],
-  startT: 201,
+  startGeneration: 201,
   name: 'Monthly Jealous Corydalis'
 }, {
   rings: 78,
@@ -77,7 +77,7 @@ const canvasConfigs = [{
     '#66A182',
     '#C0D461'
   ],
-  startT: 108,
+  startGeneration: 108,
   name: 'Too Sweet Sweet Woodruff'
 }, {
   rings: 30,
@@ -86,7 +86,7 @@ const canvasConfigs = [{
     '#E2711D',
     '#FFB627'
   ],
-  startT: 47,
+  startGeneration: 47,
   name: 'Kookily Resonant Fountain Grass'
 }, {
   rings: 44,
@@ -95,7 +95,7 @@ const canvasConfigs = [{
     '#8367C7',
     '#8367C7'
   ],
-  startT: 108,
+  startGeneration: 108,
   name: 'Weakly Blue Bergenia'
 }, {
   rings: 74,
@@ -104,7 +104,7 @@ const canvasConfigs = [{
     '#A0EEE8',
     '#A0EEE8'
   ],
-  startT: 36,
+  startGeneration: 36,
   name: 'Bravely Cool Moonflower'
 }]
 
@@ -117,7 +117,7 @@ if (document.body) {
         const imgEl = canvasEl.getElementsByTagName('img')[0]
         const canvasContainerEl = document.getElementById(`canvas-${index}-container`)
         const linkEl = canvasContainerEl.getElementsByTagName('a')[0]
-        const href = `/pentaflower/create?rings=${config.rings}&t=${config.startT}&color1=${encodeURIComponent(config.colors[0])}&color2=${encodeURIComponent(config.colors[1])}&color3=${encodeURIComponent(config.colors[2])}`
+        const href = `/pentaflower/create?rings=${config.rings}&generation=${config.startGeneration}&color1=${encodeURIComponent(config.colors[0])}&color2=${encodeURIComponent(config.colors[1])}&color3=${encodeURIComponent(config.colors[2])}`
         imgEl.src = `/assets/img/${name.replace(/\s/g, '_')}.png`
         canvasEl.style.border = `5px solid ${config.colors[2]}`
         canvasEl.style.background = config.colors[2]
