@@ -67,7 +67,7 @@ function onSavePicker (args, colorIndex) {
 
 function updateUrl (config) {
   urlParams.set('rings', config.rings)
-  urlParams.set('t', config.startGeneration)
+  urlParams.set('generation', config.startGeneration)
   urlParams.set('color1', config.colors[0])
   urlParams.set('color2', config.colors[1])
   urlParams.set('color3', config.colors[2])
