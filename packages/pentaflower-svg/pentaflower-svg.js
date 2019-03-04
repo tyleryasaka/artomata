@@ -122,12 +122,12 @@ class PentaflowerSVG {
     const loader = new window.Image()
     loader.width = canvasElement.width = size
     loader.height = canvasElement.height = size
-    loader.onload = function () {
+    loader.onload = () => {
       context.drawImage(loader, 0, 0, size, size)
       const dummyElement = document.createElement('a')
       const file = dataURItoBlob(canvasElement.toDataURL())
       dummyElement.href = URL.createObjectURL(file)
-      dummyElement.download = `${name}.png`
+      dummyElement.download = `${name}_${this.rings}_${this.t}_${this.colors.join('_').replace(/#/g, '')}.png`
       dummyElement.click()
     }
     const svgAsXML = (new window.XMLSerializer()).serializeToString(svgElement)
