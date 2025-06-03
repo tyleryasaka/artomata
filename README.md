@@ -6,7 +6,7 @@ art + cellular automata
 
 an experiment
 
-[artomata.tyleryasaka.me](http://artomata.tyleryasaka.me/)
+[artomata.tyleryasaka.github.io](http://artomata.tyleryasaka.github.io/)
 
 ## Examples
 
@@ -36,4 +36,4 @@ Note that the source code is under `packages/pentaflower-svg`.
 
 ### [website](./docs)
 
-This is the source for the [artomata.tyleryasaka.me](http://artomata.tyleryasaka.me/) website. It's a static site built with jekyll. The code is in the `docs` folder.
+This is the source for the [artomata.tyleryasaka.github.io](http://artomata.tyleryasaka.github.io/) website. It's a static site built with jekyll. The code is in the `docs` folder.
