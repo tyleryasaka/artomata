@@ -17,15 +17,14 @@ title: artomata
 email: contact@tyleryasaka.me
 description: art + cellular automata
   an experiment by tyler yasaka
-baseurl: "" # the subpath of your site, e.g. /blog
-url: http://www.artomata.io # the base hostname & protocol for your site, e.g. http://example.com
-github_username:  tyleryasaka/artomata
+baseurl: "/artomata" # the subpath of your site, e.g. /blog
+url: https://tyleryasaka.github.io/artomata/ # the base hostname & protocol for your site, e.g. http://example.com
+github_username: tyleryasaka
 
 # Build settings
 markdown: kramdown
 plugins:
   - jekyll-feed
-
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
